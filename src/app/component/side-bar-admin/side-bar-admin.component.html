@@ -1,0 +1,47 @@
+<!-- User Sidebar -->
+<div class="user-sidebar">
+    <div class="sidebar-inner">
+      <ul class="navigation">
+        <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/home/adminDashboard"><i class="la la-home"></i> Dashboard</a>
+        </li>
+        <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/home/profil"><i class="la la-user-alt"></i>My Profile</a>
+        </li>
+        <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/home/postjob"><i class="la la-paper-plane"></i>Post a New Job</a>
+        </li>
+        <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+            <a routerLink="/home/companyList"><i class="la la-building"></i>Companies</a>
+        </li>
+        <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/home/managejobs"><i class="la la-briefcase"></i>Manage Jobs</a>
+        </li>
+        <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/home/candidatelist"><i class="la la-file-invoice"></i>All Applicants</a>
+        </li>
+        <!-- <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/home/resumes"><i class="la la-bookmark-o"></i>Shortlisted Resumes</a>
+        </li> -->
+        <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/home/pricing"><i class="la la-box"></i>Packages</a>
+        </li>
+        <!-- <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/home/messages"><i class="la la-comment-o"></i>Messages</a>
+        </li> -->
+        <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/home/resume-alerts"><i class="la la-bell"></i>Resume Alerts</a>
+        </li>
+        <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/changepassword"><i class="la la-lock"></i>Change Password</a>
+        </li>
+        <li>
+          <a (click)="signOut()"><i class="la la-sign-out"></i>Logout</a>
+        </li>
+        <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+          <a routerLink="/home"><i class="la la-trash"></i>Delete Profile</a>
+        </li>
+      </ul>
+    </div>
+</div>
+<!-- End User Sidebar -->

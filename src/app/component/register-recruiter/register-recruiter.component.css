@@ -1,0 +1,47 @@
+/* Btn Style Seven */
+.btn-style-seven {
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    color: #ffffff;
+    background-color: #0146A6; /* Couleur de fond par défaut */
+    line-height: 20px;
+    border-radius: 8px;
+    font-weight: 400;
+    padding: 15px 35px;
+  }
+  
+  .btn-style-seven:hover {
+    color: #ffffff;
+    background-color: #1967D2; /* Couleur de fond au survol */
+  }
+  
+  /* Btn Style Four */
+  .btn-style-four {
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    color: #ffffff;
+    background-color: #1967D2; /* Couleur de fond par défaut 0146A6 */
+    line-height: 20px;
+    border-radius: 8px;
+    font-weight: 400;
+    padding: 15px 35px;
+  }
+  
+  .btn-style-four:hover {
+    color: #ffffff;
+    background-color: #0146A6; /* Couleur de fond au survol */
+  }
+  
+  /* État actif pour le bouton Candidate */
+  .btn-style-seven.active {
+    background-color: #E1F2E5; /* Couleur de fond lorsque le bouton est actif */
+    color: #ffffff; /* Couleur du texte lorsque le bouton est actif */
+  }
+  
+  /* État actif pour le bouton Employer */
+  .btn-style-four.active {
+    background-color: #E1F2E5; /* Couleur de fond lorsque le bouton est actif */
+    color: #4285F4; /* Couleur du texte lorsque le bouton est actif */
+  }

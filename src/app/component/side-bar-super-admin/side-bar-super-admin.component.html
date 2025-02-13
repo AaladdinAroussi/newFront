@@ -1,0 +1,51 @@
+<div class="user-sidebar">
+    <div class="sidebar-inner">
+        <ul class="navigation">
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/superAdmin/dashboard"><i class="la la-home"></i> Dashboard</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/superAdmin/users"><i class="la la-users"></i> Users</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/profil"><i class="la la-user-alt"></i>My Profile</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/postjob"><i class="la la-paper-plane"></i>Post a New Job</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/superAdmin/offers"><i class="la la-handshake"></i>Offers</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/companyList"><i class="la la-building"></i>Companies</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/superAdmin/categoryList"><i class="la la-folder-open"></i>Job Categories</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/superAdmin/levelList"><i class="la la-graduation-cap"></i>Levels</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/superAdmin/packages"><i class="la la-box"></i>Packages</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/superAdmin/sectorList"><i class="la la-star-o"></i>Sectors</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/home/superAdmin/cityList"><i class="la la-map"></i>Cities</a>
+            </li>
+            <li>
+                <a href="#"><i class="la la-bell"></i>Resume Alerts</a>
+            </li>
+            <li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="/changepassword"><i class="la la-lock"></i>Change Password</a>
+            </li>
+            <li>
+                <a (click)="signOut()"><i class="la la-sign-out"></i>Logout</a>
+            </li>
+            <li>
+                <a href="#"><i class="la la-trash"></i>Delete Profile</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+
+    <div class="page-wrapper dashboard ">
+  
+      <!-- Preloader -->
+      <!-- <div class="preloader"></div> -->
+  
+      <!-- Header Span -->
+      <span class="header-span"></span>
+  
+      <!-- Main Header-->
+      <app-header></app-header>
+      <!--End Main Header -->
+  
+      <!-- Sidebar Backdrop -->
+      <div class="sidebar-backdrop"></div>
+  
+      <!-- User Sidebar -->
+      <app-side-bar-super-admin></app-side-bar-super-admin>
+      <!-- End User Sidebar -->
+  
+      <!-- Dashboard -->
+      <section class="user-dashboard">
+        <div class="dashboard-outer">
+          <div class="upper-title-box">
+            <h3>Create a new Sector</h3>
+            <div class="text">Ready to jump back in?</div>
+          </div>
+  
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- Ls widget -->
+              <div class="ls-widget">
+                <div class="tabs-box">
+                  <div class="widget-title">
+                    <h4>Create sector</h4>
+                  </div>
+  
+                  <div class="widget-content">
+  
+                    
+  
+                    <form class="default-form"[formGroup]="form" (ngSubmit)="addSector()">
+                      <div class="row">
+                        <!-- Input -->
+                        <div class="form-group col-lg-12 col-md-12">
+                          <label>Sector Name</label>
+                          <input type="text" name="name" placeholder="Title"formControlName="name" >
+                          <div class="invalid-feedback" *ngIf="nameControl?.hasError('required') && nameControl?.touched" class="error-msg" style="color: red;">Please enter Sector Name</div>
+
+                        </div>
+
+                      <div class="form-group col-lg-12 col-md-12">
+                        <label>Sector Description</label>
+                        <textarea formControlName="description"name="description"  placeholder="Spent several years working on sheep on Wall Street. Had moderate success investing in Yugo's on Wall Street. Managed a small team buying and selling Pogo sticks for farmers. Spent several years licensing licorice in West Palm Beach, FL. Developed several new methods for working it banjos in the aftermarket. Spent a weekend importing banjos in West Palm Beach, FL.In this position, the Software Engineer collaborates with Evention's Development team to continuously enhance our current software solutions as well as create new solutions to eliminate the back-office operations and management challenges present"></textarea>
+                        <div class="invalid-feedback" *ngIf="descriptionControl?.hasError('required') && descriptionControl?.touched" class="error-msg" style="color: red;">Please enter Sector description</div>
+
+                      <!-- Input -->
+                      <div class="form-group col-lg-12 col-md-12">
+                        <label>Categories</label>
+                        <select formControlName="categories" name="categories"multiple  >
+                          <option value="">Select</option>
+                          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+                        </select>
+                        <div *ngIf="categoriesControl?.hasError('required') && categoriesControl?.touched" class="error-msg" style="color: red;">
+                          Please select at least one category.
+                        </div>
+                      </div>
+
+                      </div>
+                          
+                       
+
+                        <!-- Input -->
+                        <div class="form-group col-lg-12 col-md-12 text-right">
+                          <button class="theme-btn btn-style-one"type="submit">Add</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+  
+          </div>
+        </div>
+      </section>
+      <!-- End Dashboard -->
+  
+      <!-- Copyright -->
+      <div class="copyright-text">
+        <p>© 2021 Superio. All Right Reserved.</p>
+      </div>
+  
+    </div><!-- End Page Wrapper -->

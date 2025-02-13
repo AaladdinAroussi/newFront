@@ -1,0 +1,75 @@
+
+    <div class="page-wrapper dashboard ">
+  
+      <!-- Preloader -->
+      <!-- <div class="preloader"></div> -->
+  
+      <!-- Header Span -->
+      <span class="header-span"></span>
+  
+      <!-- Main Header-->
+      <app-header></app-header>
+      <!--End Main Header -->
+  
+      <!-- Sidebar Backdrop -->
+      <div class="sidebar-backdrop"></div>
+  
+      <!-- User Sidebar -->
+      <app-side-bar-super-admin></app-side-bar-super-admin>
+      <!-- End User Sidebar -->
+  
+      <!-- Dashboard -->
+      <section class="user-dashboard">
+        <div class="dashboard-outer">
+          <div class="upper-title-box">
+            <h3>Create a new Level</h3>
+            <div class="text">Ready to jump back in?</div>
+          </div>
+  
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- Ls widget -->
+              <div class="ls-widget">
+                <div class="tabs-box">
+                  <div class="widget-title">
+                    <h4>Create level</h4>
+                  </div>
+  
+                  <div class="widget-content">
+  
+                    
+  
+                    <form class="default-form"[formGroup]="form" (ngSubmit)="saveLevel()">
+                      <div class="row">
+                        <!-- Input -->
+                        <div class="form-group col-lg-12 col-md-12">
+                          <label>Level Name</label>
+                          <input type="text" name="level"formControlName="level" placeholder="Level">
+                          <div class="invalid-feedback" *ngIf="levelControl?.hasError('required') && levelControl?.touched" class="error-msg" style="color: red;">Please enter Level Name</div>
+                        </div>
+
+
+                        <!-- Input -->
+                        <div class="form-group col-lg-12 col-md-12 text-right">
+                          <button class="theme-btn btn-style-one"type="submit">Add</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+  
+          </div>
+        </div>
+      </section>
+      <!-- End Dashboard -->
+  
+      <!-- Copyright -->
+      <div class="copyright-text">
+        <p>© 2021 Superio. All Right Reserved.</p>
+      </div>
+  
+    </div><!-- End Page Wrapper -->
+  
