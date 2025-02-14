@@ -1,0 +1,44 @@
+<app-header></app-header>
+<div class="page-wrapper">
+
+    <!-- Preloader -->
+    <!-- <div class="preloader"></div> -->
+
+    
+
+    <!-- Info Section -->
+    <div class="login-section">
+      <div class="image-layer" style="background-image: url(assets/images/background/12.jpg);"></div>
+      <div class="outer-box">
+        <!-- Login Form -->
+        <div class="login-form ">
+          <div class="form-inner">
+            <h3>Verify Your Account</h3>
+            <div class="d-flex justify-content-center">
+                <input *ngFor="let item of otpArray; let i = index"
+                       type="text"
+                       class="otp-input form-control"
+                       maxlength="1"
+                       [id]="'otp' + i"
+                       [(ngModel)]="otpValues[i]"
+                       (input)="moveToNext(i, $event)"
+                       (keydown.backspace)="moveToPrev(i, $event)">
+              </div>
+            
+
+              <div class="bottom-box">
+            <div class="form-group">
+                <button class="theme-btn btn-style-one" type="submit" (click)="submitOTP()" name="log-in">Submit</button>
+              </div>
+                <div class="text">Didn't receive the code? <a href="#" (click)="resendCode()">Resend Code</a></div>
+              
+            </div>
+          </div>
+        </div>
+        <!--End Login Form -->
+      </div>
+    </div>
+    <!-- End Info Section -->
+
+
+  </div><!-- End Page Wrapper -->

@@ -13,8 +13,8 @@ export class RegisterRecruiterComponent implements OnInit {
 form!: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder, private service: AuthService) { }
-  get usernameControl() {
-    return this.form.get('username');
+  get fullnameControl() {
+    return this.form.get('fullName');
   }
   get emailControl() {
     return this.form.get('email');
@@ -30,7 +30,7 @@ form!: FormGroup;
   ngOnInit(): void {
     
     this.form = this.fb.group({
-      username: ['', Validators.required],
+      fullName: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       email: ['', Validators.required],
       password: ['', Validators.required],

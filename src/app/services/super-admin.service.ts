@@ -118,4 +118,8 @@ blockUser (userId: number): Observable<any> {
 unblockUser (userId: number): Observable<any> {
   return this.http.put(`${this.baseUrl}unblock/${userId}`, {}, { headers: this.getHeaders() });
 }
+  // Méthode pour récupérer un candidat par ID
+  getSuperAdminById(superAdminId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/getSuperAdminById?superAdminId=${superAdminId}`, { headers: this.getHeaders() })
+  }
 }

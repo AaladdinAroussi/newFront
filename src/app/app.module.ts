@@ -48,6 +48,7 @@ import { SideBarCandidateComponent } from './component/side-bar-candidate/side-b
 import { AdminJobsComponent } from './component/admin-jobs/admin-jobs.component';
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
 import { SuperAdminUsersComponent } from './component/super-admin-users/super-admin-users.component';
+import { VerficationCodeComponent } from './component/verfication-code/verfication-code.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { SuperAdminUsersComponent } from './component/super-admin-users/super-ad
     AdminJobsComponent,
     ChangePasswordComponent,
     SuperAdminUsersComponent,
+    VerficationCodeComponent,
     
   ],
   imports: [

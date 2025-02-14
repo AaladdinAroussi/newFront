@@ -1,0 +1,195 @@
+.otp-input {
+    width: 60px;
+    height: 60px;
+    font-size: 26px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    margin: 5px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s ease-in-out;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.otp-input:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 91, 187, 0.5);
+    background-color: #e7f1ff;
+}
+
+.otp-input:invalid {
+    border-color: #e74c3c;
+    background-color: #f8d7da;
+}
+
+.otp-input::placeholder {
+    color: #aaa;
+}
+
+.signup-link {
+    color: #007bff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+h3 {
+    font-weight: 700;
+    text-align: center;
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.verification-section {
+    padding: 50px 0;
+    background-color: #f0f4f8;
+}
+
+.verification-form {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.verification-form p {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.otp-input-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;  /* Allows items to wrap in smaller screens */
+}
+
+.otp-input {
+    width: 70px; /* Larger input fields for desktop */
+    height: 70px;
+    font-size: 30px; /* Larger font for better visibility */
+}
+
+.bottom-box {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.bottom-box .text {
+    font-size: 14px;
+    color: #555;
+}
+
+.divider {
+    margin: 10px 0;
+}
+
+.divider span {
+    color: #888;
+}
+
+.btn-box a {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    margin: 10px;
+    text-align: center;
+    width: 100%;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.social-btn-two {
+    color: #fff;
+}
+
+.facebook-btn {
+    background-color: #3b5998;
+}
+
+.google-btn {
+    background-color: #db4437;
+}
+
+.facebook-btn:hover {
+    background-color: #2d4373;
+}
+
+.google-btn:hover {
+    background-color: #c1351d;
+}
+
+/* Desktop-specific adjustments */
+@media (min-width: 1024px) {
+    .otp-input-group {
+        gap: 25px; /* Increase gap between OTP inputs */
+    }
+
+    .otp-input {
+        width: 80px; /* Wider OTP input fields on larger screens */
+        height: 80px;
+        font-size: 36px; /* Larger font size for better readability on desktop */
+    }
+
+    h3 {
+        font-size: 36px; /* Bigger title for desktop */
+    }
+
+    .verification-form {
+        padding: 50px; /* Increased padding for larger screens */
+    }
+
+    .bottom-box {
+        margin-top: 30px;
+    }
+}
+/* Responsive design for smaller screens */
+/* Responsive design pour les écrans plus petits */
+@media (max-width: 768px) {
+    .otp-input {
+        width: 10vw; /* Réduit la largeur pour les écrans plus petits */
+        height: 10vw;
+        font-size: 6vw; /* Réduit la taille de la police pour les écrans plus petits */
+    }
+
+    h3 {
+        font-size: 28px; /* Taille du titre ajustée */
+    }
+
+    .verification-form {
+        padding: 20px; /* Ajuste le padding */
+    }
+
+    .bottom-box {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .otp-input {
+        width: 13vw; /* Largeur réduite pour les très petits écrans */
+        height: 13vw;
+        font-size: 8vw; /* Taille de police ajustée pour les très petits écrans */
+    }
+
+    h3 {
+        font-size: 22px; /* Réduit la taille du titre pour les très petits écrans */
+    }
+
+    .verification-form {
+        padding: 15px; /* Réduit davantage le padding */
+    }
+
+    .bottom-box {
+        margin-top: 10px;
+    }
+}

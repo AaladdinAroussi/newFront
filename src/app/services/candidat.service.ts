@@ -11,7 +11,19 @@ export class CandidatService {
   private apiUrl = `${environment.url}/api/candidat`; 
 
   constructor(private http: HttpClient) { }
+  private getHeaders(): HttpHeaders {
+    const userConnect = localStorage.getItem('userconnect'); // Récupérer l'objet userconnect
+    let token: string | null = null;
 
+    if (userConnect) {
+      const user = JSON.parse(userConnect); // Convertir en objet
+      token = user.token; // Assurez-vous que le jeton est stocké sous la clé 'token'
+    }
+
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}` // Inclure le jeton dans les en-têtes
+    });
+  }
   // Méthode pour ajouter un favori
   addFavori(candidatId: number, jobOfferId: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/${candidatId}/favoris/${jobOfferId}`, {}).pipe(
@@ -50,5 +62,15 @@ deleteCandidat(candidatId: number): Observable<any> {
     })
   );
 }
+
+  // Méthode pour récupérer un candidat par ID
+  getCandidatById(candidatId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getCandidatbyId?candidatId=${candidatId}`, { headers: this.getHeaders() }).pipe(
+      catchError(error => {
+ console.error('Get candidat by ID error', error);
+        return throwError(error);
+      })
+    );
+  }
 
 }

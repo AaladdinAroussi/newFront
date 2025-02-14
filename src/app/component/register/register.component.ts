@@ -14,8 +14,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private router: Router, private fb: FormBuilder, private service: AuthService) { }
 
-  get usernameControl() {
-    return this.form.get('username');
+  get fullnameControl() {
+    return this.form.get('fullName');
   }
   
   get emailControl() {
@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      username: ['', Validators.required],
+      fullName: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], // Validation pour les chiffres uniquement
       email: ['', [Validators.required, Validators.email]], // Correctly set up validators as an array
       password: ['', Validators.required],

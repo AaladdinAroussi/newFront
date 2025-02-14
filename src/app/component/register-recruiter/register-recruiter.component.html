@@ -36,14 +36,14 @@
               </div>
 
               <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" placeholder="Username"formControlName="username" class="form-control" required>
-                <div class="invalid-feedback" *ngIf="usernameControl?.hasError('required') && usernameControl?.touched" class="error-msg" style="color: red;">Please enter your username.</div>
+                <label>Fullname</label>
+                <input type="text" name="fullName" placeholder="Fullname"formControlName="fullName" class="form-control" required>
+                <div class="invalid-feedback" *ngIf="fullnameControl?.hasError('required') && fullnameControl?.touched" class="error-msg" style="color: red;">Please enter your fullname.</div>
               </div>
 
               <div class="form-group">
                 <label>Phone Number</label>
-                <input type="text" name="phone" placeholder="Phone Number" formControlName="phone" class="form-control" required>
+                <input type="text" name="phone" placeholder="Phone Number"maxlength="8" formControlName="phone" class="form-control" required>
                 <div class="invalid-feedback" *ngIf="phoneControl?.hasError('required') && phoneControl?.touched" class="error-msg" style="color: red;">
                     Please enter your phone number.
                 </div>

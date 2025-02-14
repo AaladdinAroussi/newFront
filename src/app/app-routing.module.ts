@@ -39,6 +39,7 @@ import { RoleGuard } from './guards/role.guard';
 import { AdminJobsComponent } from './component/admin-jobs/admin-jobs.component';
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
 import { SuperAdminUsersComponent } from './component/super-admin-users/super-admin-users.component';
+import { VerficationCodeComponent } from './component/verfication-code/verfication-code.component';
 
 const routes: Routes = [
 
@@ -46,6 +47,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'registerRecruiter', component: RegisterRecruiterComponent },
   { path: 'changepassword', component: ChangePasswordComponent },
+  { path: 'verification', component: VerficationCodeComponent },
+
 
 
   {
@@ -66,7 +69,7 @@ const routes: Routes = [
       { path: 'bloglist', component: BlogListComponent },
       { path: 'blogDetails', component: BlogDetailsComponent },
       //{ path: 'blogDetails/:id', component: BlogDetailsComponent },//blogDetails with id
-      { path: 'profil', component: ProfilComponent },
+      { path: 'profil', component: ProfilComponent ,canActivate: [AuthGuard]},
 
       { path: 'candidatelist', component: CandidateListComponent ,canActivate: [AuthGuard, RoleGuard], data: { expectedRoles: ['ROLE_SUPERADMIN', 'ROLE_ADMIN'] }},
       //{ path: 'candidatelist/:id', component: CandidateListComponent },//candidatelist with id
