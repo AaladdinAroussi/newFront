@@ -38,7 +38,7 @@ export class CommonAdminService {
 
   // Récupérer toutes les entreprises par adminId
   getAllCompaniesByAdminId(adminId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getAllCompaniesByAdminId/${adminId}`, { headers: this.getHeaders() }).pipe(
+    return this.http.get(`${this.apiUrl}/getAllCompanyByUserId/${adminId}`, { headers: this.getHeaders() }).pipe(
       catchError(error => {
         console.error('Get all companies by admin ID error', error);
         return throwError(error);
@@ -67,8 +67,8 @@ export class CommonAdminService {
   }
 
   // Méthode pour créer une offre d'emploi
-  createJobOffer(jobOffer: any, adminId: number, companyId: number, categoryOfferId: number, cityId: number, sectorId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/create?adminId=${adminId}&companyId=${companyId}&categoryOfferId=${categoryOfferId}&cityId=${cityId}&sectorId=${sectorId}`, jobOffer, { headers: this.getHeaders() }).pipe(
+  createJobOffer(jobOffer: any, userId: number, companyId: number, categoryOfferId: number, cityId: number, sectorId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/create?userId=${userId}&companyId=${companyId}&categoryOfferId=${categoryOfferId}&cityId=${cityId}&sectorId=${sectorId}`, jobOffer, { headers: this.getHeaders() }).pipe(
       catchError(error => {
         console.error('Create job offer error', error);
         return throwError(error);

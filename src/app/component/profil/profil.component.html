@@ -27,64 +27,114 @@
               </div>
               
               <div class="widget-content">
-                <form class="default-form" (ngSubmit)="updateProfile(form)" #form="ngForm">
-                  <div class="form-group col-lg-6">
-                    <label>Full Name</label>
-                    <input type="text" name="fullName" [(ngModel)]="userData.fullName" placeholder="Jerome" required>
+                <form class="default-form"(ngSubmit)="updateProfile(form)" #form="ngForm">
+                  
+                  <!-- Upload Section -->
+                  <div class="uploading-outer">
+                    <div class="uploadButton">
+                      <input class="uploadButton-input" type="file" name="attachments[]" accept="image/*, application/pdf" id="upload" multiple />
+                      <label class="uploadButton-button ripple-effect" for="upload">Browse Logo</label>
+                      <span class="uploadButton-file-name"></span>
+                    </div>
+                    <div class="text">Max file size: 1MB | Min dimension: 330x300 | Accepted: .jpg, .png</div>
                   </div>
                   
-                  <div class="form-group col-lg-6">
-                    <label>Phone</label>
-                    <input type="text" name="phone" [(ngModel)]="userData.phone" placeholder="0 123 456 7890" required>
-                  </div>
-                  
-                  <div class="form-group col-lg-6">
-                    <label>Email</label>
-                    <input type="email" name="email" [(ngModel)]="userData.email" placeholder="creativelayers" required>
-                  </div>
-                  
-                  <div class="form-group col-lg-6">
-                    <label>Experience</label>
-                    <input type="text" name="experience" [(ngModel)]="userData.experience" placeholder="5-10 Years" required>
-                  </div>
-                  
-                  <div class="form-group col-lg-6">
-                    <label>Age</label>
-                    <select class="chosen-select" name="age" [(ngModel)]="userData.candidateDetails.age">
-                      <option>23 - 27 Years</option>
-                      <option>24 - 28 Years</option>
-                      <option>25 - 29 Years</option>
-                      <option>26 - 30 Years</option>
-                    </select>
-                  </div>
-                  
-                  <div class="form-group col-lg-6">
-                    <label>Languages</label>
-                    <input type="text" name="languages" [(ngModel)]="userData.candidateDetails.languages" placeholder="English, Turkish" required>
-                  </div>
-                  
-                  <div class="form-group col-lg-6">
-                    <label>Website</label>
-                    <input type="text" name="website" [(ngModel)]="userData.candidateDetails.website" placeholder="www.jerome.com">
-                  </div>
-                  
-                  <div class="form-group col-lg-6">
-                    <label>Github</label>
-                    <input type="text" name="github" [(ngModel)]="userData.candidateDetails.github" placeholder="www.github.com">
-                  </div>
-                  
-                  <div class="form-group col-lg-12">
-                    <label>LinkedIn</label>
-                    <input type="text" name="linkedin" [(ngModel)]="userData.candidateDetails.linkedIn" placeholder="www.linkedin.com">
-                  </div>
-                  
-                  <div class="form-group col-lg-12">
-                    <label>Bio</label>
-                    <textarea name="bio" [(ngModel)]="userData.candidateDetails.bio" placeholder="Your bio here..."></textarea>
-                  </div>
-                  
-                  <div class="form-group col-lg-12">
-                    <button class="theme-btn btn-style-one" type="submit">Save</button>
+                  <div class="row">
+                    <!-- User Information -->
+                    <div class="form-group col-lg-6">
+                      <label>Full Name</label>
+                      <input type="text" name="fullName"[(ngModel)]="userData.fullName" placeholder="Jerome"required>
+                    </div>
+                    
+                    <div class="form-group col-lg-6">
+                      <label>Phone</label>
+                      <input type="text" name="phone"[(ngModel)]="userData.phone" placeholder="0 123 456 7890"required>
+                    </div>
+                    
+                    <div class="form-group col-lg-6">
+                      <label>Email</label>
+                      <input type="text" name="email"[(ngModel)]="userData.email" placeholder="creativelayers"required>
+                    </div>
+                    
+                    <div class="form-group col-lg-6">
+                      <label>Experience</label>
+                      <input type="text" name="experience"[(ngModel)]="userData.experience" placeholder="5-10 Years">
+                    </div>
+                    
+                    <div class="form-group col-lg-6">
+                      <label>Age</label>
+                      <select class="chosen-select" name="age"[(ngModel)]="userData.candidateDetails.age">
+                        <option>23 - 27 Years</option>
+                        <option>24 - 28 Years</option>
+                        <option>25 - 29 Years</option>
+                        <option>26 - 30 Years</option>
+                      </select>
+                    </div>
+                    
+                    <div class="form-group col-lg-6">
+                      <label>Education Level</label>
+                      <input type="text" name="education" placeholder="Certificate">
+                    </div>
+                    
+                    <div class="form-group col-lg-6">
+                      <label>Languages</label>
+                      <input type="text" name="languages"[(ngModel)]="userData.candidateDetails.languages" placeholder="English, Turkish">
+                    </div>
+                    
+                    <div class="form-group col-lg-6">
+                      <label>Sectors</label>
+                      <select class="chosen-select multiple" multiple name="sectors">
+                        <option value="Banking">Banking</option>
+                        <option value="Digital&Creative">Digital & Creative</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Management">Management</option>
+                      </select>
+                    </div>
+                    
+                    <!-- Bio Section -->
+                    <div class="form-group col-lg-12">
+                      <label>Bio</label>
+                      <textarea  [(ngModel)]="userData.candidateDetails.bio" placeholder="Spent several years working on sheep on Wall Street. Had moderate success investing in Yugo's on Wall Street. Managed a small team buying and selling Pogo sticks for farmers. Spent several years licensing licorice in West Palm Beach, FL. Developed several new methods for working it banjos in the aftermarket. Spent a weekend importing banjos in West Palm Beach, FL.In this position, the Software Engineer collaborates with Evention's Development team to continuously enhance our current software solutions as well as create new solutions to eliminate the back-office operations and management challenges present"></textarea>
+                    </div>
+                    
+                    <!-- Social Profiles -->
+                    <div class="form-group col-lg-6">
+                      <label>Website</label>
+                      <input type="text" name="website"[(ngModel)]="userData.candidateDetails.website" placeholder="www.jerome.com">
+                    </div>
+                    
+                    <div class="form-group col-lg-6">
+                      <label>Github</label>
+                      <input type="text" name="github" placeholder="www.github.com"[(ngModel)]="userData.candidateDetails.github">
+                    </div>
+                    
+                    <div class="form-group col-lg-12">
+                      <label>LinkedIn</label>
+                      <input type="text" name="linkedin" placeholder="www.linkedin.com" [(ngModel)]="userData.candidateDetails.linkedIn">
+                    </div>
+                    
+                    <!-- Address Section -->
+                    <div class="form-group col-lg-12">
+                      <label>City</label>
+                      <select class="chosen-select" name="city">
+                        <option>Melbourne</option>
+                        <option>Pakistan</option>
+                        <option>China</option>
+                        <option>Japan</option>
+                        <option>India</option>
+                      </select>
+                    </div>
+                    
+                    <div class="form-group col-lg-12">
+                      <label>Complete Address</label>
+                      <input type="text" name="address" placeholder="329 Queensberry Street, North Melbourne VIC 3051, Australia.">
+                    </div>
+                    
+                    <!-- Save Button -->
+                    <div class="form-group col-lg-12">
+                      <button class="theme-btn btn-style-one" type="submit">Save</button>
+                    </div>
                   </div>
                 </form>
               </div>

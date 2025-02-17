@@ -135,6 +135,15 @@ filterByDate(timeFrame: string): Observable<any> {
     // Make the GET request to the filter-job-offers endpoint
     return this.http.get(`${this.baseUrl}filter-job-offers`, { params });
   }
+  getUserByEmail(email: string): Observable<any> {
+    const params = new HttpParams().set('email', email);
+    return this.http.get(`${this.baseUrl}getUserByEmail`, { params });
+  }
+  getUserByPhone(phone: string): Observable<any> {
+    const params = new HttpParams().set('phone', phone);
+    return this.http.get(`${this.baseUrl}getUserByPhone`, { params });
+  }
 
+  
 
 }

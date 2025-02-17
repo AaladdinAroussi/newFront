@@ -101,7 +101,7 @@ import { VerficationCodeComponent } from './component/verfication-code/verficati
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule, 
+    HttpClientModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,

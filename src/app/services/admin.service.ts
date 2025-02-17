@@ -26,6 +26,15 @@ export class AdminService {
     });
   }
 
+  updateAdmin(admin: any, id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update/${id}`, admin, { headers: this.getHeaders() }).pipe(
+      catchError(error => {
+        console.error('Update admin error', error);
+        return throwError(error);
+      })
+    );
+  }
+
   // Méthode pour marquer une offre comme "pourvue"
   markJobAsFilled(jobId: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/markFilled?id=${jobId}`, {}, { headers: this.getHeaders() }).pipe(

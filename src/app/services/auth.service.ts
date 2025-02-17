@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -69,5 +69,19 @@ export class AuthService {
   // Méthode pour changer le mot de passe
   changePassword(token: string, oldPassword: string, newPassword: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/changePassword`, { token, oldPassword, newPassword });
+  }
+
+
+  verifyMobileCode(phone: string, code: string): Observable<any> {
+    const params = new HttpParams()
+      .set('phone', phone)
+      .set('code', code);
+    return this.http.post(`${this.apiUrl}/verifyMobileCode`, null, { params }); 
+  }
+  // Optionally, add a method to resend the verification code
+  resendVerificationCode(userId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/resendCode`, null, {
+      params: { userId: userId }
+    });
   }
 }

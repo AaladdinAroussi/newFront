@@ -49,8 +49,8 @@ form!: FormGroup;
         (response) => {
           console.log('SignUp successfully:', response);
           Swal.fire("SignUp successfully");
-          this.router.navigateByUrl("/login");
-        },
+          this.router.navigateByUrl("/login"); 
+          },
         (error) => {
           console.error('Error signUp :', error);
         }

@@ -28,6 +28,7 @@ export class SuperAdminUsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.reloadUsers(); // Charger les utilisateurs dès l'initialisation
+
   }
 
   reloadUsers(): void {
@@ -35,6 +36,7 @@ export class SuperAdminUsersComponent implements OnInit {
     this.users = []; // Réinitialisation de la liste avant rechargement
     this.loadCandidats();
     this.loadAdmins();
+    
   }
 
   loadCandidats(): void {
@@ -42,6 +44,8 @@ export class SuperAdminUsersComponent implements OnInit {
       (candidatsResponse: any) => {
         const candidats = candidatsResponse.candidats || [];
         this.addUsersWithRole(candidats, 'candidate');
+        console.log("candidates",this.users);
+
       },
       (error: any) => {
         this.errorMessage = error.message || 'An error occurred while fetching candidates.';

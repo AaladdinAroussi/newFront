@@ -11,6 +11,30 @@
     background-color: #f9f9f9;
     color: #333;
 }
+.resend-link {
+    color: #007bff; /* Bootstrap primary color */
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .resend-link:hover {
+    color: #000000; /* Darker shade on hover */
+  } 
+.form-inner {
+    position: relative; /* Necessary for absolute positioning */
+}
+.error-message {
+    position: absolute; /* Positionnement absolu */
+    right: 0; /* Aligne à droite */
+    top: 50%; /* Centre verticalement par rapport à la hauteur de form-inner */
+    transform: translateY(-50%); /* Ajuste pour centrer parfaitement */
+    margin-left: 20px; /* Espace entre le message d'erreur et le champ de saisie */
+    margin-top: 20px;
+    margin-left: auto; /* Pousse le message d'erreur vers la droite */
+}
+.bottom-box .form-group {
+    margin-top: 20px; /* Ajustez la valeur selon vos besoins */
+}
 
 .otp-input:focus {
     border-color: #0056b3;
@@ -193,3 +217,4 @@ h3 {
         margin-top: 10px;
     }
 }
+

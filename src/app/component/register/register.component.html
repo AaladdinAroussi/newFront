@@ -4,7 +4,6 @@
     <!-- <div class="preloader"></div> -->
 
     <!-- Main Header-->
-    <app-header></app-header>
     <!--End Main Header -->
 
     <!-- Info Section -->
@@ -14,7 +13,7 @@
         <!-- Login Form -->
         <div class="login-form default-form">
           <div class="form-inner">
-            <h3>Create a Free Superio Account</h3>
+            <h3>Create Account</h3>
 
             <!--Register Form-->
             <form [formGroup]="form" (ngSubmit)="signUp()">
@@ -41,6 +40,27 @@
                 <div class="invalid-feedback" *ngIf="fullnameControl?.hasError('required') && fullnameControl?.touched" class="error-msg" style="color: red;">Please enter your fullname.</div>
               </div>
 
+              
+              <!-- <div class="mb-4">
+                <label class="block text-gray-700">
+                    Phone Number
+                </label>
+                <div class="flex items-stretch ">
+                    <select class="px-4 py-2 border rounded-l-lg bg-gray-100" [(ngModel)]="selectedCountry">
+                        <option *ngFor="let country of countries" [value]="country.code">{{ country.name }} ({{ country.code }})</option>
+                    </select>
+                    <input class="w-full px-4 py-2 border rounded-r-lg bg-gray-100" placeholder="Phone Number" type="text" formControlName="phone"/>
+                </div>
+            </div> -->
+              
+              <!-- <div class="flex items-center px-3 py-2 bg-gray-50 border-r border-gray-300">
+                <img alt="Indonesian flag" class="w-5 h-5 mr-2" height="20" src="https://storage.googleapis.com/a1aa/image/1V38830yiLqkrc6k9cjzPylSHdgNRMJSxKsMR1YPSdo.jpg" width="20"/>
+                <select class="bg-gray-50 text-gray-700 focus:outline-none" id="country-code">
+                <option value="+62">
+                  +62
+                </option>
+                </select>
+              </div> -->
               <div class="form-group">
                 <label>Phone Number</label>
                 <input type="text" name="phone" placeholder="Phone Number"maxlength="8" formControlName="phone" class="form-control" required>

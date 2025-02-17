@@ -1,0 +1,20 @@
+.range-slider-one {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input[type="range"] {
+    width: 100%;
+    height: 5px;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+
+  }
+  
+
+  
+  .amount-outer {
+    margin-top: 5px;
+  }

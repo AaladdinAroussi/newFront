@@ -1,28 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
-
+export interface JobOffer {
+  id: number;
+  dateCreation: string;
+  dateModification: string;
+  closingDate: string;
+  critere: string;
+  description: string;
+  experience: number;
+  jobType: string;
+  salary: number;
+  status: string;
+  title: string;
+  // Add other fields as necessary
+}
 @Component({
   selector: 'app-job-list',
   templateUrl: './job-list.component.html',
   styleUrls: ['./job-list.component.css']
 })
 export class JobListComponent implements OnInit {
-  listOffers: any[] = [];
+  listOffers: JobOffer[] = []; // Use the JobOffer type
   locations: string[] = []; // Add locations array
   categories: any[] = []; // Use the Category type
   keyword: string = '';
   selectedLocation: string = ''; // This will hold the input for city or postcode
   selectedCategory: string = '';
   selectedJobType: string[] = [];
+  selectedExperienceLevels: number[] = []; // Array to hold selected experience levels
   selectedDatePosted: string = '';
   selectedExperienceLevel: string = '';
   searchKeyword: string = '';
+  salaryRange: number = 0; // Single salary range variable
 
   constructor(private commonService: CommonService) { }
 
   ngOnInit(): void {
     this.getAllCategories(); // Load all categories initially
     this.getOffers(); // Load all job offers initially
+  }
+
+  updateSalaryRange() {
+    // You can implement any logic here if needed when the salary range changes
+    this.getOffers(); // Call getOffers to refresh the job offers based on the selected salary
   }
 
   getAllCategories(): void {
@@ -46,6 +66,16 @@ export class JobListComponent implements OnInit {
       }
     );
   }
+  toggleExperienceLevel(experience: number): void {
+    const index = this.selectedExperienceLevels.indexOf(experience);
+    if (index > -1) {
+        this.selectedExperienceLevels.splice(index, 1); // Remove if already selected
+    } else {
+        this.selectedExperienceLevels.push(experience); // Add if not selected
+    }
+    this.getOffers(); // Refresh offers based on selected experience levels
+}
+
   toggleJobType(jobType: string): void {
     const index = this.selectedJobType.indexOf(jobType);
     if (index > -1) {
@@ -56,7 +86,8 @@ export class JobListComponent implements OnInit {
         this.selectedJobType.push(jobType);
     }
     this.getOffers(); // Call getOffers to refresh the job offers based on the selected job types
-}
+  }
+
   onSearch(): void {
     this.getOffers(); // Call getOffers when searching
   }
@@ -71,11 +102,12 @@ export class JobListComponent implements OnInit {
         this.selectedJobType,
         this.selectedCategory,
         this.selectedLocation,
-        this.selectedExperienceLevel ? parseInt(this.selectedExperienceLevel) : undefined,
-        // this.selectedSalary ? parseFloat(this.selectedSalary) : undefined
+        this.selectedExperienceLevels.length > 0 ? Math.max(...this.selectedExperienceLevels) : undefined, // Pass the maximum selected experience level
+        this.salaryRange
     ).subscribe(
         (data) => {
-            this.listOffers = data.jobOffers; // Assuming the response contains jobOffers
+            // Filter out job offers with status 'PENDING'
+            this.listOffers = data.jobOffers.filter((offer: JobOffer) => offer.status !== 'PENDING');
             console.log('Filtered job offers:', this.listOffers);
         },
         error => {

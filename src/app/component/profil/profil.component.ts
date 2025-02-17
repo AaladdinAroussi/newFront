@@ -74,21 +74,59 @@ export class ProfilComponent implements OnInit {
   }
 
   updateProfile(form: any): void {
-    const updatedCandidat = {
-      ...this.userData,
-      fullName: form.value.fullName,
-      phone: form.value.phone,
-      email: form.value.email,
-      experience: form.value.experience,
-      candidateDetails: {
-        linkedIn: form.value.linkedin,
-        website: form.value.website,
-        github: form.value.github,
-        age: form.value.age,
-        languages: form.value.languages.split(',').map(lang => lang.trim()),
-        bio: form.value.bio,
-        image: form.value.image // Assuming you handle image upload separately
-      }
+    const updatedData = {
+        fullName: form.value.fullName,
+        phone: form.value.phone,
+        email: form.value.email,
+        experience: form.value.experience,
+        candidateDetails: {
+            linkedIn: form.value.linkedin,
+            website: form.value.website,
+            github: form.value.github,
+            age: form.value.age,
+            languages: form.value.languages.split(',').map((lang: string) => lang.trim()),
+            bio: form.value.bio,
+            image: form.value.image // Assuming you handle image upload separately
+        }
     };
+
+    if (this.isAdmin) {
+        // Update logic for Admin
+        this.adminService.updateAdmin(updatedData, this.userData.id).subscribe(
+            response => {
+                console.log('Admin profile updated successfully:', response);
+                // Optionally, redirect or show a success message
+            },
+            error => {
+                console.error('Error updating admin profile:', error);
+            }
+        );
+    } 
+    else if (this.isSuperAdmin) {
+        // Update logic for SuperAdmin
+        this.superAdminService.updateSuperAdmin(updatedData, this.userData.id).subscribe(
+            response => {
+                console.log('Super Admin profile updated successfully:', response);
+                // Optionally, redirect or show a success message
+            },
+            error => {
+                console.error('Error updating super admin profile:', error);
+            }
+        );
+    } 
+    else if (this.isCandidate) {
+        // Update logic for Candidate
+        this.candidatService.updateCandidat(updatedData, this.userData.id).subscribe(
+            response => {
+                console.log('Candidate profile updated successfully:', response);
+                // Optionally, redirect or show a success message
+            },
+            error => {
+                console.error('Error updating candidate profile:', error);
+            }
+        );
+    } else {
+        console.error('User  role not recognized for update.');
+    }
 }
 }
