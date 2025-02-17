@@ -118,9 +118,9 @@ blockUser (userId: number): Observable<any> {
 unblockUser (userId: number): Observable<any> {
   return this.http.put(`${this.baseUrl}unblock/${userId}`, {}, { headers: this.getHeaders() });
 }
-  // Méthode pour récupérer un candidat par ID
+  // Méthode pour récupérer un SuperAdmin par ID
   getSuperAdminById(superAdminId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}getSuperAdminById?superAdminId=${superAdminId}`, { headers: this.getHeaders() })
+    return this.http.get(`${this.baseUrl}getSuperAdminById/${superAdminId}`, { headers: this.getHeaders() });
   }
    updateSuperAdmin(superAdmin: any, id: number): Observable<any> {
       return this.http.put(`${this.baseUrl}update/${id}`, superAdmin, { headers: this.getHeaders() })

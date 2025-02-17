@@ -87,9 +87,9 @@ export class AdminService {
 
   // Méthode pour récupérer un admin par ID
   getAdminById(adminId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getCandidatbyId?adminId=${adminId}`, { headers: this.getHeaders() }).pipe(
+    return this.http.get(`${this.apiUrl}/getAdminById/${adminId}`, { headers: this.getHeaders() }).pipe(
       catchError(error => {
- console.error('Get admin by ID error', error);
+        console.error('Get admin by ID error', error);
         return throwError(error);
       })
     );

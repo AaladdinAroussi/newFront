@@ -65,9 +65,9 @@ deleteCandidat(candidatId: number): Observable<any> {
 
   // Méthode pour récupérer un candidat par ID
   getCandidatById(candidatId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getCandidatbyId?candidatId=${candidatId}`, { headers: this.getHeaders() }).pipe(
+    return this.http.get(`${this.apiUrl}/getCandidatById/${candidatId}`, { headers: this.getHeaders() }).pipe(
       catchError(error => {
- console.error('Get candidat by ID error', error);
+        console.error('Get candidat by ID error', error);
         return throwError(error);
       })
     );

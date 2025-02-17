@@ -141,13 +141,7 @@ export class VerficationCodeComponent implements OnInit {
                 }
               }
   
-              // SweetAlert success message
-              Swal.fire({
-                title: 'Account Confirmed!',
-                text: 'You are successfully logged in.',
-                icon: 'success',
-                confirmButtonText: 'OK'
-              });
+              
   
               this.router.navigate(['/home']); 
             },
