@@ -69,9 +69,9 @@
                       </div>
                     </div>
                     
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-6"*ngIf="isCandidate">
                       <label for="age">Age</label>
-                      <select class="chosen-select" formControlName="age" id="age">
+                      <select class="chosen-select" formControlName="age"name="age" id="age">
                         <option value="" disabled selected>Select your age range</option>
                         <option value="23-27">23 - 27 Years</option>
                         <option value="28-32">28 - 32 Years</option>
@@ -91,7 +91,7 @@
             </div>
           </div>
 
-          <div class="ls-widget">
+          <div class="ls-widget"*ngIf="isCandidate">
             <div class="tabs-box">
               <div class="widget-title">
                 <h4>Other Infos</h4>
@@ -128,7 +128,7 @@
           </div>
 
           <!-- Experience Section -->
-          <div class="ls-widget">
+          <div class="ls-widget"*ngIf="isCandidate">
             <div class="tabs-box">
               <div class="widget-title">
                 <h4>Experience</h4>
@@ -192,7 +192,7 @@
           </div>
 
           <!-- Social Network Section -->
-          <div class="ls-widget">
+          <div class="ls-widget"*ngIf="isCandidate">
             <div class="tabs-box">
               <div class="widget-title">
                 <h4>Social Network</h4>
@@ -214,7 +214,7 @@
                     
                     <div class="form-group col-lg-12">
                       <label>LinkedIn</label>
-                      <input type="text" formControlName="linkedin" placeholder="www.linkedin.com">
+                      <input type="text"name="linkedin" formControlName="linkedin" placeholder="www.linkedin.com">
                     </div>
 
                     <!-- Input -->

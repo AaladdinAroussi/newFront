@@ -72,14 +72,16 @@ deleteCandidat(candidatId: number): Observable<any> {
       })
     );
   }
-
   updateCandidat(candidat: any, id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/update/${id}`, candidat, { headers: this.getHeaders() }).pipe(
+    const headers = this.getHeaders().set('Content-Type', 'application/json');
+    return this.http.put(`${this.apiUrl}/update/${id}`, candidat, { headers }).pipe(
       catchError(error => {
         console.error('Update candidat error', error);
         return throwError(error);
       })
     );
   }
+  
+  
 
 }
