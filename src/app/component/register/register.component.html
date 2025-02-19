@@ -112,6 +112,9 @@
                 <input id="password-field" type="password" name="password" value="" placeholder="Password" formControlName="password" class="form-control"
                 [ngClass]="{'is-invalid': passwordControl?.invalid && passwordControl?.touched}">
                 <div class="invalid-feedback" *ngIf="passwordControl?.hasError('required') && passwordControl?.touched" class="error-msg" style="color: red;">Please enter your password.</div>
+                <div *ngIf="passwordControl?.hasError('minlength') && passwordControl?.touched" class="invalid-feedback" style="color: red;">
+                  Password must be at least 5 characters long.
+                </div>
               </div>
               
 

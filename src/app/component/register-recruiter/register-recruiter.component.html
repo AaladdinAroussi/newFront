@@ -42,14 +42,29 @@
 
               <div class="form-group">
                 <label>Phone Number</label>
-                <input type="text" name="phone" placeholder="Phone Number"maxlength="8" formControlName="phone" class="form-control" required>
-                <div class="invalid-feedback" *ngIf="phoneControl?.hasError('required') && phoneControl?.touched" class="error-msg" style="color: red;">
-                    Please enter your phone number.
+                <div class="d-flex align-items-center">
+                  <div class="custom-dropdown" (click)="dropdownOpen = !dropdownOpen">
+                    <div class="selected-country">
+                      <img *ngIf="selectedCountry" [src]="getCountryFlag(selectedCountry)" alt="{{ selectedCountryName }} flag" style="width: 20px; height: 15px; margin-right: 5px;"/>
+                      {{ selectedCountryCode || 'Select' }} <!-- Display the selected country code -->
+                    </div>
+                    <div class="dropdown-list" *ngIf="dropdownOpen">
+                      <div *ngFor="let country of countries" (click)="selectCountry(country)">
+                        <img [src]="country.emojiFlag" alt="{{ country.name }} flag" style="width: 20px; height: 15px; margin-right: 5px;"/> {{ country.phoneCode }} <!-- Display phone code instead of country name -->
+                      </div>
+                    </div>
+                  </div>
+                  <input type="text" name="phone" placeholder="Phone Number" maxlength="8"
+                    formControlName="phone" class="form-control phone-input" [ngClass]="{'is-invalid': phoneControl?.invalid && phoneControl?.touched}"  required>
                 </div>
-                <div class="invalid-feedback" *ngIf="phoneControl?.hasError('pattern') && phoneControl?.touched" class="error-msg" style="color: red;">
-                    Please enter a valid phone number (numbers only).
+                <div class="invalid-feedback" *ngIf="phoneControl?.hasError('required') && phoneControl?.touched" style="color: red;">
+                  Please enter your phone number.
                 </div>
-            </div>
+                <div class="invalid-feedback" *ngIf="phoneControl?.hasError('pattern') && phoneControl?.touched" style="color: red;">
+                  Please enter a valid phone number (numbers only).
+                </div>
+              </div>
+
               <div class="form-group">
                 <label>Email</label>
                 <input type="text" name="email" placeholder="Email"formControlName="email" class="form-control" required>
@@ -57,8 +72,12 @@
               </div>
               <div class="form-group">
                 <label>Password</label>
-                <input id="password-field" type="password" name="password" value="" placeholder="Password" formControlName="password" class="form-control">
+                <input id="password-field" type="password" name="password" value="" placeholder="Password" formControlName="password" class="form-control"
+                [ngClass]="{'is-invalid': passwordControl?.invalid && passwordControl?.touched}">
                 <div class="invalid-feedback" *ngIf="passwordControl?.hasError('required') && passwordControl?.touched" class="error-msg" style="color: red;">Please enter your password.</div>
+                <div *ngIf="passwordControl?.hasError('minlength') && passwordControl?.touched" class="invalid-feedback" style="color: red;">
+                  Password must be at least 5 characters long.
+                </div>
               </div>
 
               <div class="form-group">

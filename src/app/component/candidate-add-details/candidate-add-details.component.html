@@ -1,0 +1,65 @@
+<div class="page-wrapper">
+
+    <!-- Preloader -->
+    <!-- <div class="preloader"></div> -->
+
+    
+
+    <!-- Info Section -->
+    <div class="login-section">
+      <div class="image-layer" style="background-image: url(assets/images/background/12.jpg);"></div>
+      <div class="outer-box">
+        <!-- Login Form -->
+        <div class="login-form default-form">
+          <div class="form-inner">
+            <h3>Select your Sector </h3>
+            <!--Login Form-->
+            <!-- [formGroup]="form" (ngSubmit)="signIn()" -->
+            <form [formGroup]="form" (ngSubmit)="onSubmit()"> 
+                <div class="form-group">
+                  <label>Sector</label>
+                  <select formControlName="sector" class="chosen-select">
+                    <option value="">Select Your Sector</option>
+                    <option *ngFor="let sector of sectors" [value]="sector.id">{{ sector.name }}</option>
+                  </select>
+                  <div *ngIf="form.get('sector')?.invalid && form.get('sector')?.touched" class="text-danger">
+                    Sector is required.
+                  </div>
+                </div>
+              
+                <div class="form-group">
+                    <label>Experience</label>
+                    <select formControlName="experience" class="chosen-select">
+                      <option value="-1">Select Your Experience</option> <!-- Option d'invite avec une valeur différente -->
+                      <option value="0">0 year</option>
+                      <option value="1">1 year</option>                    
+                      <option value="2">2 years</option>                    
+                      <option value="3">3 years</option>                    
+                      <option value="4">4 years</option>                    
+                      <option value="5">5 years</option>                    
+                      <option value="6">6 years</option>                    
+                      <option value="7">7 years</option>                    
+                      <option value="8">8 years</option>                    
+                      <option value="9">9 years</option>                    
+                      <option value="10">10+ years</option>                   
+                    </select>
+                    <div *ngIf="form.get('experience')?.invalid && form.get('experience')?.touched" class="text-danger">
+                      Experience is required.
+                    </div>
+                  </div>
+              
+                <div class="form-group">
+                  <button class="theme-btn btn-style-one" type="submit" name="log-in">Submit</button>
+                </div>
+              </form>
+
+           
+          </div>
+        </div>
+        <!--End Login Form -->
+      </div>
+    </div>
+    <!-- End Info Section -->
+
+
+  </div><!-- End Page Wrapper -->

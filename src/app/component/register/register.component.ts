@@ -14,9 +14,9 @@ export class RegisterComponent implements OnInit {
   selectedCountryCode: string = '';
   dropdownOpen = false;
   selectedCountryName: string = '';
-  form!: FormGroup;
-  countries: any[] = [];
   selectedCountry: string = ''; // Variable pour stocker le pays sélectionné
+  countries: any[] = [];
+  form!: FormGroup;
 
   constructor(
     private router: Router,
@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit {
       fullName: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], // Validation pour chiffres uniquement
       email: ['', [Validators.required, Validators.email]], // Validation pour email
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(5)]], // Assurez-vous que c'est un tableau
       country: [this.selectedCountry || '', Validators.required], // Ajout du pays dans le formulaire réactif
     });
   }
@@ -94,29 +94,21 @@ export class RegisterComponent implements OnInit {
        this.dropdownOpen = false;
      }
    }
-  signUp(): void {
+   signUp(): void {
     console.log('signUp() called');
     if (this.form.valid) {
       const formData = this.form.value;
-      //formData.phone = Number(formData.phone);
       const phoneWithoutPlus = this.selectedCountryCode.replace('+', '') + formData.phone;
       formData.phone = phoneWithoutPlus; // Set the phone number without the '+' sign  
-        console.log('SignUp Infos:', formData);
-
-
-      this.service.signupCandidat(formData).subscribe(
-        (response) => {
-          console.log('SignUp successfully:', response);
-          Swal.fire("SignUp successfully");
-          this.router.navigateByUrl('/login');
-        },
-        (error) => {
-          console.error('Error signUp:', error);
-        }
-      );
+      console.log('SignUp Infos:', formData);
+  
+      // Stocker les données dans le localStorage
+      localStorage.setItem('candidateData', JSON.stringify(formData));
+  
+      //Swal.fire("SignUp successfully");
+      this.router.navigateByUrl('/addDetails'); // Redirigez vers la page de détails après l'inscription
     } else {
       console.log('Phone errors:', this.phoneControl?.errors);
-
       console.warn("Form invalid", this.form.errors);
       this.form.markAllAsTouched();
     }

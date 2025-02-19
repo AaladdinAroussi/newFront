@@ -15,7 +15,7 @@ export class PostJobComponent implements OnInit {
   jobTypes: any[] = [];
   companies: any[] = [];
   categoryOffers: any[] = [];
-  sectors: any[] = []; // Ajouté pour stocker les secteurs
+  sectors: any[] = [];
   jobForm: FormGroup;
   adminId: number | null = null;
   userRoles: string[] = [];
@@ -39,7 +39,7 @@ export class PostJobComponent implements OnInit {
       city: ['', Validators.required],
       company: ['', Validators.required],
       category: ['', Validators.required],
-      sector: [''] // Ajouté pour le secteur
+      sector: [''] 
     });
   }
 
@@ -58,7 +58,7 @@ export class PostJobComponent implements OnInit {
 
     this.loadCities();
     this.loadCategoryOffers();
-    this.loadAdminId(); // Load adminId from local storage
+    this.loadAdminId(); // Load adminId from localstorage
 
     if (this.adminId) {
       this.loadCompanies(this.adminId);
