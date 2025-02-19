@@ -108,7 +108,7 @@ export class AddCompanyComponent implements OnInit {
     if (this.form.valid) {
       const companyData = {
         name: this.form.value.name,
-        website: this.form.value.website,
+        websiteUrl: this.form.value.website,
         address: this.form.value.address,
         email: this.form.value.email,
         phone: this.form.value.phone,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,9 +11,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
+  selectedCountryCode: string = '';
   dropdownOpen = false;
-
+  selectedCountryName: string = '';
   form!: FormGroup;
   countries: any[] = [];
   selectedCountry: string = ''; // Variable pour stocker le pays sélectionné
@@ -46,12 +46,17 @@ export class RegisterComponent implements OnInit {
       (data) => {
         this.countries = data; // Stocker les pays récupérés
         console.log('Countries retrieved:', this.countries);
+        // Set a default country (e.g., Tunisia)
 
-        // Sélectionner la Tunisie par défaut si elle existe dans la liste
-        const tunisia = this.countries.find(country => country.code === 'TN');
-        if (tunisia) {
-          this.selectedCountry = tunisia.code; // 'TN' est le code du pays de la Tunisie
-        }
+      const defaultCountry = this.countries.find(country => country.code === 'TN'); // Assuming 'TN' is the code for Tunisia
+
+      if (defaultCountry) {
+        this.selectedCountry = defaultCountry.code;
+        this.selectedCountryName = defaultCountry.name;
+        this.selectedCountryCode = defaultCountry.phoneCode;
+        this.form.get('country')?.setValue(this.selectedCountry);
+      }
+        
       },
       (error) => {
         console.error('Error retrieving countries:', error);
@@ -63,15 +68,41 @@ export class RegisterComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], // Validation pour chiffres uniquement
       email: ['', [Validators.required, Validators.email]], // Validation pour email
       password: ['', Validators.required],
+      country: [this.selectedCountry || '', Validators.required], // Ajout du pays dans le formulaire réactif
     });
   }
+  selectCountry(country: any): void {
+    this.selectedCountry = country.code;
+    this.selectedCountryName = country.name; // Optional: Keep this if you need it for display purposes
+    this.selectedCountryCode = country.phoneCode; // Update the phone code
+    this.form.get('country')?.setValue(this.selectedCountry);
+    // Do not set the phone input value here
+    this.dropdownOpen = false; // Close the dropdown after selection
+  }
+  getCountryFlag(countryCode: string): string {
+    const country = this.countries.find(c => c.code === countryCode);
+      return country ? country.emojiFlag : '';
+  }
+   // Close the dropdown when clicking outside
 
+   @HostListener('document:click', ['$event'])
+   onClick(event: MouseEvent): void {
+     const target = event.target as HTMLElement;
+     const dropdown = document.querySelector('.custom-dropdown') as HTMLElement;
+     // Check if the click is outside the dropdown
+     if (dropdown && !dropdown.contains(target)) {
+       this.dropdownOpen = false;
+     }
+   }
   signUp(): void {
     console.log('signUp() called');
     if (this.form.valid) {
       const formData = this.form.value;
-      formData.phone = Number(formData.phone);
-      console.log('SignUp Infos:', formData);
+      //formData.phone = Number(formData.phone);
+      const phoneWithoutPlus = this.selectedCountryCode.replace('+', '') + formData.phone;
+      formData.phone = phoneWithoutPlus; // Set the phone number without the '+' sign  
+        console.log('SignUp Infos:', formData);
+
 
       this.service.signupCandidat(formData).subscribe(
         (response) => {
@@ -84,6 +115,8 @@ export class RegisterComponent implements OnInit {
         }
       );
     } else {
+      console.log('Phone errors:', this.phoneControl?.errors);
+
       console.warn("Form invalid", this.form.errors);
       this.form.markAllAsTouched();
     }

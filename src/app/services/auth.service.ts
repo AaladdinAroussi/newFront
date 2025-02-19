@@ -68,8 +68,15 @@ export class AuthService {
 
   // Méthode pour changer le mot de passe
   changePassword(token: string, oldPassword: string, newPassword: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/changePassword`, { token, oldPassword, newPassword });
+    const params = new HttpParams()
+      .set('token', token)
+      .set('oldPassword', oldPassword)
+      .set('newPassword', newPassword);
+  
+    return this.http.post(`${this.apiUrl}/changePassword`, {}, { params });
   }
+  
+  
 
 
   verifyMobileCode(phone: string, code: string): Observable<any> {

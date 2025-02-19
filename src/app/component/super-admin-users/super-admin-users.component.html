@@ -52,6 +52,9 @@
                       </thead>
 
                       <tbody>
+                        <tr *ngIf="users.length === 0">
+                          <td colspan="7" style="text-align: center;">No users available.</td>
+                      </tr>
                         <tr *ngFor="let user of users; let i = index">
 
                           <td>{{ i + 1 }}</td>

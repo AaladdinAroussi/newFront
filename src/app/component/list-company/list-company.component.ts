@@ -22,6 +22,7 @@ export class ListCompanyComponent implements OnInit {
 
 
   ngOnInit(): void {
+    
     this.userRoles = this.authService.getUserRoles();
     // Vérifiez si l'utilisateur a les rôles d'admin ou de super admin
     this.isAdmin = this.userRoles.includes('ROLE_ADMIN');
@@ -36,6 +37,13 @@ export class ListCompanyComponent implements OnInit {
       this.loading = false; // No role, stop loading
       
     }
+  }
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Les mois commencent à 0
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   signOut(): void {

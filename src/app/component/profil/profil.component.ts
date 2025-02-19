@@ -4,6 +4,7 @@
   import { AdminService } from 'src/app/services/admin.service';
   import { AuthService } from 'src/app/services/auth.service';
   import { CandidatService } from 'src/app/services/candidat.service';
+import { CommonService } from 'src/app/services/common.service';
   import { SuperAdminService } from 'src/app/services/super-admin.service';
 import Swal from 'sweetalert2';
 
@@ -14,6 +15,9 @@ import Swal from 'sweetalert2';
   })
   export class ProfilComponent implements OnInit {
     userRoles: string[] = [];
+    cities: any[] = [];
+    sectors: any[] = [];
+
     isAdmin = false;
     isSuperAdmin = false;
     isCandidate = false;
@@ -32,6 +36,7 @@ import Swal from 'sweetalert2';
       private authService: AuthService,
       private candidatService: CandidatService,
       private adminService: AdminService,
+      private commonService: CommonService,
       private superAdminService: SuperAdminService
     ) {}
     get fullnameControl() {
@@ -50,6 +55,10 @@ import Swal from 'sweetalert2';
       this.isAdmin = this.userRoles.includes('ROLE_ADMIN');
       this.isSuperAdmin = this.userRoles.includes('ROLE_SUPERADMIN');
       this.isCandidate = this.userRoles.includes('ROLE_CANDIDAT');
+
+      this.getAllSectors();
+      this.loadCities();
+
 
       // Initialize the form groups
       this.formProfile = this.formBuilder.group({
@@ -90,6 +99,32 @@ import Swal from 'sweetalert2';
         }
       }
     }
+    getAllSectors(): void {
+          this.commonService.getAllSectors().subscribe(
+              (response: any) => {
+                  this.sectors = response; // Store the retrieved sectors
+                  console.log("sectors",this.sectors);
+              },
+              error => {
+                  if (error.status === 404) {
+                      console.warn('No sectors found.');
+                      this.sectors = []; // Set sectors to an empty array
+                    
+                  } 
+                }
+          );
+      }
+    loadCities(): void {
+      this.commonService.getAllCities().subscribe(
+        (response) => {
+          this.cities = response.cities;
+          console.log('Cities:', this.cities);
+        },
+        (error) => {
+          console.error('Error fetching cities:', error);
+        }
+      );
+    }
 
     private getUserIdFromLocalStorage(): number | null {
       const userConnect = localStorage.getItem('userconnect');
@@ -99,8 +134,6 @@ import Swal from 'sweetalert2';
       }
       return null;
     }
-
-  
 
     private getAdminById(adminId: number): void {
       this.adminService.getAdminById(adminId).subscribe(
@@ -153,17 +186,17 @@ import Swal from 'sweetalert2';
       fullName: this.userData.fullName,
       phone: this.userData.phone,
       email: this.userData.email,
-      age: this.userData.details?.age,
+      age: this.userData.details?.age || '', // Définit la valeur vide si details est null
     });
     this.formOtherInfo.patchValue({
-      city: this.userData.details?.city,
+      city: this.userData.details?.city || '',
       address: this.userData.details?.address,
     });
     this.formExperience.patchValue({
       experience: this.userData.experience,
       education: this.userData.details?.education,
       languages: this.userData.details?.languages,
-      sector: this.userData.sector,
+      sector: this.userData.sector?.id || '', // Assurez-vous de récupérer l'ID du secteur
       bio: this.userData.details?.bio,
     });
     this.formSocialNetwork.patchValue({
@@ -180,7 +213,7 @@ import Swal from 'sweetalert2';
   }
 
   updateProfile(): void {
-    // Create a details object that combines the relevant fields
+    // Créez un objet details qui combine les champs pertinents
     const details = {
         age: this.formProfile.value.age,
         bio: this.formExperience.value.bio,
@@ -193,17 +226,22 @@ import Swal from 'sweetalert2';
         address: this.formOtherInfo.value.address
     };
 
-    // Create a JSON object with all the necessary fields
+    // Récupérez l'ID du secteur et créez un objet Sector
+    const sectorId = this.formExperience.value.sector; // Assurez-vous que cela correspond à formExperience
+    const sector = { id: sectorId }; // Créez un objet Sector avec l'ID
+
+    // Créez un objet JSON avec tous les champs nécessaires
     const updatedData = {
         fullName: this.formProfile.value.fullName,
+        sector: sector, // Incluez l'objet Sector ici        
         phone: this.formProfile.value.phone,
         email: this.formProfile.value.email,
         age: this.formProfile.value.age,
         experience: this.formExperience.value.experience,
-        details: details // Include the details object here
+        details: details // Incluez l'objet details ici
     };
 
-    // Log the updated data for debugging
+    // Log des données mises à jour pour le débogage
     console.log('Updated Data:', updatedData);
 
     if (this.isAdmin) {
@@ -219,12 +257,21 @@ import Swal from 'sweetalert2';
             },
             error => {
                 console.error('Error updating admin profile:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'There was an error updating the admin profile.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                if (error.error && error.error.message) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.error.message, // Affiche le message d'erreur spécifique
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'There was an error updating the admin profile.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
             }
         );
     } else if (this.isSuperAdmin) {
@@ -240,12 +287,21 @@ import Swal from 'sweetalert2';
             },
             error => {
                 console.error('Error updating super admin profile:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'There was an error updating the super admin profile.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                if (error.error && error.error.message) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.error.message, // Affiche le message d'erreur spécifique
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'There was an error updating the super admin profile.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
             }
         );
     } else if (this.isCandidate) {
@@ -261,12 +317,21 @@ import Swal from 'sweetalert2';
             },
             error => {
                 console.error('Error updating candidate profile:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'There was an error updating the candidate profile.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                if (error.error && error.error.message) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.error.message, // Affiche le message d'erreur spécifique
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'There was an error updating the candidate profile.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
             }
         );
     } else {
