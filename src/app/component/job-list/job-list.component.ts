@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { CandidatService } from 'src/app/services/candidat.service';
 import { CommonService } from 'src/app/services/common.service';
+
+export interface Sector {
+  id: number;
+  name: string;
+}
+
 export interface JobOffer {
   id: number;
   dateCreation: string;
@@ -12,8 +20,9 @@ export interface JobOffer {
   salary: number;
   status: string;
   title: string;
-  // Add other fields as necessary
+  sector: Sector;
 }
+
 @Component({
   selector: 'app-job-list',
   templateUrl: './job-list.component.html',
@@ -32,32 +41,65 @@ export class JobListComponent implements OnInit {
   selectedExperienceLevel: string = '';
   searchKeyword: string = '';
   salaryRange: number = 0; // Single salary range variable
+  userData: any | null = null;
+  userRoles: string[] = [];
+  isCandidate = false;
+  candidateSector: number | null = null; // Change to number | null
 
-  constructor(private commonService: CommonService) { }
+  constructor(private commonService: CommonService, private authService: AuthService, private candidatService: CandidatService) { }
 
   ngOnInit(): void {
+    this.userRoles = this.authService.getUserRoles();
+    this.isCandidate = this.userRoles.includes('ROLE_CANDIDAT');
+    if (this.isCandidate) {
+      console.log("Role", this.userRoles);
+      console.log("Candidate : ", this.isCandidate);
+      
+      const userConnect = localStorage.getItem('userconnect'); // Extract userconnect from local storage
+      if (userConnect) {
+        const userData = JSON.parse(userConnect); // Parse the JSON string
+        const candidateId = userData.id; // Extract the candidate ID
+        this.getCandidateById(candidateId); // Fetch candidate data if the user is a candidate
+      }
+    } else {
+      console.log("No candidate");
+      this.getOffers(); // Load all job offers initially if not a candidate
+    }
+
     this.getAllCategories(); // Load all categories initially
-    this.getOffers(); // Load all job offers initially
   }
 
+  private getCandidateById(candidateId: number): void {
+    this.candidatService.getCandidatById(candidateId).subscribe(
+        response => {
+            this.userData = response.candidat;
+            this.candidateSector = this.userData.sector.id; // Assuming sector is an object with an id
+            console.log("Candidate sector", this.candidateSector);
+            console.log('Candidate data:', this.userData);
+
+            // Call getOffers after setting the candidate sector
+            this.getOffers();
+        },
+        error => {
+            console.error('Error fetching candidate data:', error);
+        }
+    );
+}
+
   updateSalaryRange() {
-    // You can implement any logic here if needed when the salary range changes
     this.getOffers(); // Call getOffers to refresh the job offers based on the selected salary
   }
 
   getAllCategories(): void {
     this.commonService.getAllCategoryOffers().subscribe(
       (response) => {
-        // Assuming response.categoryOffers is an array of category objects
         this.categories = response.categoryOffers.map((category: { id: number; name: string }) => ({
           id: category.id,
           name: category.name
         }));
         
-        // Log the first category name
         if (this.categories.length > 0) {
           const name = this.categories[0].name;
-          //console.log('Categories loaded:', this.categories); // Log the first category
         }
       },
       (error) => {
@@ -66,24 +108,23 @@ export class JobListComponent implements OnInit {
       }
     );
   }
+
   toggleExperienceLevel(experience: number): void {
     const index = this.selectedExperienceLevels.indexOf(experience);
     if (index > -1) {
-        this.selectedExperienceLevels.splice(index, 1); // Remove if already selected
+      this.selectedExperienceLevels.splice(index, 1); // Remove if already selected
     } else {
-        this.selectedExperienceLevels.push(experience); // Add if not selected
+      this.selectedExperienceLevels.push(experience); // Add if not selected
     }
     this.getOffers(); // Refresh offers based on selected experience levels
-}
+  }
 
   toggleJobType(jobType: string): void {
     const index = this.selectedJobType.indexOf(jobType);
     if (index > -1) {
-        // If the job type is already selected, remove it
-        this.selectedJobType.splice(index, 1);
+      this.selectedJobType.splice(index, 1); // Remove if already selected
     } else {
-        // If the job type is not selected, add it
-        this.selectedJobType.push(jobType);
+      this.selectedJobType.push(jobType); // Add if not selected
     }
     this.getOffers(); // Call getOffers to refresh the job offers based on the selected job types
   }
@@ -93,22 +134,34 @@ export class JobListComponent implements OnInit {
   }
 
   getOffers(): void {
-    // Start with an empty list of offers
     this.listOffers = [];
 
-    // Call the filterJobOffers method with the selected filters
     this.commonService.filterJobOffers(
         this.searchKeyword.trim(),
         this.selectedJobType,
         this.selectedCategory,
         this.selectedLocation,
-        this.selectedExperienceLevels.length > 0 ? Math.max(...this.selectedExperienceLevels) : undefined, // Pass the maximum selected experience level
+        this.selectedExperienceLevels.length > 0 ? Math.max(...this.selectedExperienceLevels) : undefined,
         this.salaryRange
     ).subscribe(
         (data) => {
-            // Filter out job offers with status 'PENDING'
             this.listOffers = data.jobOffers.filter((offer: JobOffer) => offer.status !== 'PENDING');
             console.log('Filtered job offers:', this.listOffers);
+
+            console.log("Candidate Sector ID:", this.candidateSector);
+            this.listOffers.forEach(offer => {
+                console.log(`Offer ID: ${offer.id}, Offer Sector ID: ${offer.sector.id}`);
+            });
+
+            if (this.isCandidate && this.candidateSector !== null) {
+                this.listOffers = this.listOffers.filter(offer => {
+                    const matches = offer.sector.id === this.candidateSector;
+                    console.log(`Checking offer ID ${offer.id} with sector ID ${offer.sector.id}: ${matches}`);
+                    return matches;
+                });
+            } else {
+                console.log("filter of sectors n'est pas traite");
+            }
         },
         error => {
             console.error('Error fetching job offers with filters', error);
