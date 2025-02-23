@@ -42,7 +42,7 @@
                         <thead>
                           <tr>
                             <th>Name</th>
-                            <th>Description</th>
+                            
                             <th>Actions</th>
                           </tr>
                         </thead>
@@ -50,12 +50,17 @@
                         <tbody>
                           <tr *ngFor="let level of levels"> <!-- Use *ngFor to iterate over levels -->
                             <td>{{ level.name }}</td>
-                            <td>{{ level.description }}</td>
+                            
                             <td>
                               <div class="option-box">
                                 <ul class="option-list">
                                   <li>
-                                    <button (click)="deleteLevel(level.id)" data-text="Delete Application">
+                                    <button (click)="updateLevel(level.id)" data-text="Update Level">
+                                      <span class="la la-pencil"></span> <!-- Icône de mise à jour -->
+                                    </button>
+                                  </li>
+                                  <li>
+                                    <button (click)="deleteLevel(level.id)" data-text="Delete Level">
                                       <span class="la la-trash"></span>
                                     </button>
                                   </li>
@@ -80,9 +85,5 @@
       </section>
       <!-- End Dashboard -->
   
-      <!-- Copyright -->
-      <div class="copyright-text">
-        <p>© 2021 Superio. All Right Reserved.</p>
-      </div>
-  
+     
     </div><!-- End Page Wrapper -->

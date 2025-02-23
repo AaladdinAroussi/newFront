@@ -90,6 +90,7 @@ export class LoginComponent implements OnInit {
 
         // Handling 401 errors: Redirect to verification if needed
         if (error.status === 401 && (errorMessage.includes("Un code de vérification a été généré") || 
+        errorMessage.includes("Erreur: Votre numéro de téléphone n'est pas confirmé. Veuillez confirmer votre numéro de téléphone avant de vous connecter.") || 
                                      errorMessage.includes("Erreur: Numéro de mobile non confirmé."))) {
           console.warn("Redirecting to verification...");
           this.redirectToVerification();

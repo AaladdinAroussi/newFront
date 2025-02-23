@@ -1,0 +1,78 @@
+.default-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 💡 Effet de lumière dynamique */
+.default-table thead::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 80%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-50%);
+    border-radius: 8px 8px 0 0;
+}
+
+
+/* 🎬 Animation d'apparition */
+@keyframes fadeInTop {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.default-table thead th {
+    animation: fadeInTop 0.5s ease-out;
+}
+
+/* 📌 Style pour le corps du tableau */
+.default-table tbody tr {
+    border-bottom: 1px solid #f1f1f1; /* Séparateur léger entre les lignes */
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* 🎨 Alternance des couleurs */
+.default-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* 🖱️ Effet de survol avec élévation */
+.default-table tbody tr:hover {
+    background-color: #eef5ff;
+    transform: translateX(5px);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 📌 Séparateur entre les lignes */
+.default-table tbody tr + tr {
+    border-top: 2px solid #f1f1f1; /* Séparateur clair entre les tr */
+}
+
+/* 📌 Responsive */
+@media (max-width: 768px) {
+    .table-outer {
+        overflow-x: auto;
+    }
+
+    .default-table {
+        min-width: 600px;
+    }
+
+    .default-table thead th,
+    .default-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

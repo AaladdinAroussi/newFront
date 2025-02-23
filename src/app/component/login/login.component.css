@@ -1,4 +1,77 @@
-
 .resend-link:hover {
-    color: #000000; /* Darker shade on hover */
-  } 
+  color: #000000; /* Darker shade on hover */
+} 
+
+.login-form {
+  background-color: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.1), 
+      0 8px 20px rgba(0, 0, 0, 0.15), 
+      0 12px 40px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+  margin: auto;
+  width: 90%; /* Makes it responsive on smaller screens */
+
+  /* Animation d'apparition */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Hover effect */
+.login-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+      0 6px 12px rgba(0, 0, 0, 0.12), 
+      0 12px 25px rgba(0, 0, 0, 0.18), 
+      0 16px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .login-form {
+      padding: 20px;
+      max-width: 90%;
+      animation: fadeInUp 0.6s ease-out forwards; /* Même animation que sur desktop */
+  }
+}
+
+/* Ajustement mobile */
+@media (max-width: 480px) {
+  .login-form {
+      padding: 15px;
+      border-radius: 8px;
+      animation: fadeInUp 0.6s ease-out forwards; /* Même animation que sur tablette */
+  }
+
+  .resend-link {
+      font-size: 14px;
+      animation: pulse 1.5s infinite;
+  }
+}
+
+/* Keyframes Animations */
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.1);
+  }
+  100% {
+      transform: scale(1);
+  }
+}

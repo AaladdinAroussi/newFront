@@ -36,8 +36,14 @@
 
               <div class="form-group">
                 <label>Fullname</label>
-                <input type="text" name="fullName" placeholder="Fullname"formControlName="fullName" class="form-control" required>
-                <div class="invalid-feedback" *ngIf="fullnameControl?.hasError('required') && fullnameControl?.touched" class="error-msg" style="color: red;">Please enter your fullname.</div>
+                <input type="text" name="fullName" placeholder="Fullname" formControlName="fullName" class="form-control" required
+                  [ngClass]="{'is-invalid': fullnameControl?.invalid && fullnameControl?.touched}">
+                <div class="invalid-feedback" *ngIf="fullnameControl?.hasError('required') && fullnameControl?.touched" class="error-msg" style="color: red;">
+                  Please enter your fullname.
+                </div>
+                <div class="invalid-feedback" *ngIf="fullnameControl?.hasError('minlength') && fullnameControl?.touched" class="error-msg" style="color: red;">
+                  Fullname must be at least 3 characters long.
+                </div>
               </div>
 
               <div class="form-group">
@@ -54,7 +60,7 @@
                       </div>
                     </div>
                   </div>
-                  <input type="text" name="phone" placeholder="Phone Number" maxlength="8"
+                  <input type="text" name="phone" placeholder="Phone Number" maxlength="10"(input)="formatPhoneInput($event)"
                     formControlName="phone" class="form-control phone-input" [ngClass]="{'is-invalid': phoneControl?.invalid && phoneControl?.touched}"  required>
                 </div>
                 <div class="invalid-feedback" *ngIf="phoneControl?.hasError('required') && phoneControl?.touched" style="color: red;">

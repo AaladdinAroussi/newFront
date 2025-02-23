@@ -64,12 +64,32 @@ export class RegisterComponent implements OnInit {
     );
 
     this.form = this.fb.group({
-      fullName: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], // Validation pour chiffres uniquement
+      fullName: ['', [Validators.required, Validators.minLength(3)]], // Minimum length of 3 characters
+      phone: ['', [Validators.required, Validators.pattern('^[0-9 ]*$')]], // Allow digits and spaces
       email: ['', [Validators.required, Validators.email]], // Validation pour email
       password: ['', [Validators.required, Validators.minLength(5)]], // Assurez-vous que c'est un tableau
       country: [this.selectedCountry || '', Validators.required], // Ajout du pays dans le formulaire réactif
     });
+  }
+  formatPhoneInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    // Remove all non-numeric characters except spaces
+    const cleanedValue = input.value.replace(/[^0-9]/g, '');
+    // Format the cleaned value to add spaces
+    let formattedValue = '';
+    if (cleanedValue.length > 0) {
+      // Add the first two digits
+      formattedValue += cleanedValue.substring(0, 2);
+    }
+    if (cleanedValue.length > 2) {
+      // Add a space and then the next four digits
+      formattedValue += ' ' + cleanedValue.substring(2, 5);
+    }
+    if (cleanedValue.length > 5) {
+      // Add a space and then the remaining digits
+      formattedValue += ' ' + cleanedValue.substring(5, 8);
+    }
+    input.value = formattedValue.trim(); // Set the formatted value back to the input
   }
   selectCountry(country: any): void {
     this.selectedCountry = country.code;
@@ -98,19 +118,55 @@ export class RegisterComponent implements OnInit {
     console.log('signUp() called');
     if (this.form.valid) {
       const formData = this.form.value;
-      const phoneWithoutPlus = this.selectedCountryCode.replace('+', '') + formData.phone;
-      formData.phone = phoneWithoutPlus; // Set the phone number without the '+' sign  
+  
+      // Convert email to lowercase
+      formData.email = formData.email.toLowerCase();
+  
+      // Remove spaces from the phone number and combine with country code
+      const phoneWithoutSpaces = formData.phone.replace(/\s+/g, ''); 
+      const phoneWithCountryCode = this.selectedCountryCode.replace('+', '') + phoneWithoutSpaces; 
+      formData.phone = phoneWithCountryCode; // Set the phone number without spaces  
+  
       console.log('SignUp Infos:', formData);
   
-      // Stocker les données dans le localStorage
-      localStorage.setItem('candidateData', JSON.stringify(formData));
-  
-      //Swal.fire("SignUp successfully");
-      this.router.navigateByUrl('/addDetails'); // Redirigez vers la page de détails après l'inscription
+      // Check if phone number exists
+      this.service.checkPhoneExists({ phone: formData.phone }).subscribe(
+        (phoneResponse) => {
+          // If phone is available, check if email exists
+          this.service.checkEmailExists({ email: formData.email }).subscribe(
+            (emailResponse) => {
+              // If both phone and email are available, store data in localStorage
+              localStorage.setItem('candidateData', JSON.stringify(formData));
+              // Redirect to the details page after storing data
+              this.router.navigateByUrl('/addDetails'); 
+            },
+            (emailError) => {
+              console.error('Email check error:', emailError);
+              // Display a specific message if the email is already in use
+              const errorMessage = emailError.error?.message || 'Email is already in use!';
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: errorMessage,
+              });
+            }
+          );
+        },
+        (phoneError) => {
+          console.error('Phone check Error:', phoneError);
+          // Display a specific message if the phone number is already in use
+          const errorMessage = phoneError.error?.message || 'Phone number is already in use!';
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: errorMessage,
+          });
+        }
+      );
     } else {
-      console.log('Phone errors:', this.phoneControl?.errors);
       console.warn("Form invalid", this.form.errors);
       this.form.markAllAsTouched();
     }
   }
+
 }

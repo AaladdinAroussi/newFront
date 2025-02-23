@@ -33,7 +33,7 @@ export class AddCompanyComponent implements OnInit {
       website: ['', Validators.required], // Optional
       address: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Numeric validation
+      phone: ['', [Validators.required, Validators.pattern('^[0-9 ]*$'), Validators.minLength(8)]], // Allow digits and spaces
       postcode: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Numeric validation
     });
 
@@ -74,35 +74,32 @@ export class AddCompanyComponent implements OnInit {
   }
 
   
-  signOut(): void {
-    const refreshToken = localStorage.getItem('refreshtoken'); // Get refresh token from local storage
-  
-    if (refreshToken) {
-      this.authService.signout(refreshToken).subscribe(
-        (response) => {
-          console.log('Sign out successful:', response);
-  
-          // Remove all relevant items from local storage
-          localStorage.removeItem('userconnect'); // Remove user data
-          localStorage.removeItem('token'); // Remove access token
-          localStorage.removeItem('refreshtoken'); // Remove refresh token
-          localStorage.removeItem('state'); // Remove any other state if necessary
-  
-          this.router.navigate(['/login']); // Redirect to login page
-        },
-        (error) => {
-          console.error('Error during sign out:', error);
-        }
-      );
-    } else {
-      console.log('No refresh token found');
-      // Optionally, you can still clear local storage and redirect
-      localStorage.removeItem('userconnect');
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshtoken');
-      localStorage.removeItem('state');
-      this.router.navigate(['/login']);
+  formatPostcodeInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    // Remove all non-numeric characters
+    const cleanedValue = input.value.replace(/[^0-9]/g, '');
+    // Limit the length to 4 digits
+    input.value = cleanedValue.substring(0, 4); // Set the cleaned value back to the input
+  }
+  formatPhoneInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    // Remove all non-numeric characters except spaces
+    const cleanedValue = input.value.replace(/[^0-9]/g, '');
+    // Format the cleaned value to add spaces
+    let formattedValue = '';
+    if (cleanedValue.length > 0) {
+      // Add the first two digits
+      formattedValue += cleanedValue.substring(0, 2);
     }
+    if (cleanedValue.length > 2) {
+      // Add a space and then the next four digits
+      formattedValue += ' ' + cleanedValue.substring(2, 5);
+    }
+    if (cleanedValue.length > 5) {
+      // Add a space and then the remaining digits
+      formattedValue += ' ' + cleanedValue.substring(5, 8);
+    }
+    input.value = formattedValue.trim(); // Set the formatted value back to the input
   }
   addCompany(): void {
     if (this.form.valid) {

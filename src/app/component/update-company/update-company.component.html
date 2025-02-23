@@ -1,0 +1,123 @@
+<div class="page-wrapper dashboard ">
+  
+  <!-- Preloader -->
+  <!-- <div class="preloader"></div> -->
+
+  <!-- Header Span -->
+  <span class="header-span"></span>
+
+  <!-- Main Header-->
+  <app-header></app-header>
+  <!--End Main Header -->
+
+  <!-- Sidebar Backdrop -->
+  <div class="sidebar-backdrop"></div>
+
+  <!-- User Sidebar -->
+  <app-side-bar-admin *ngIf="isAdmin"></app-side-bar-admin>
+  <app-side-bar-super-admin *ngIf="isSuperAdmin"></app-side-bar-super-admin>
+  <!-- End User Sidebar -->
+
+  <!-- Dashboard -->
+  <section class="user-dashboard">
+    <div class="dashboard-outer">
+      <div class="upper-title-box">
+        <h3>Update Company</h3>
+        <div class="text">Ready to make changes?</div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- Ls widget -->
+          <div class="ls-widget">
+            <div class="tabs-box">
+              <div class="widget-title">
+                <h4>Update Company Details</h4>
+              </div>
+
+              <div class="widget-content">
+                <form class="default-form" [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+                  <div class="row">
+                    <!-- Input for Company Name -->
+                    <div class="form-group col-lg-12 col-md-12">
+                      <label>Company Name</label>
+                      <input type="text" formControlName="name" placeholder="Name">
+                      <div class="invalid-feedback" *ngIf="nameControl?.hasError('required') && nameControl?.touched" class="error-msg" style="color: red;">Please enter Company Name</div>
+
+                    </div>
+
+                    <!-- Input for Website URL -->
+                    <div class="form-group col-lg-12 col-md-12">
+                      <label>WebSite URL</label>
+                      <input type="text" formControlName="websiteUrl"name="websiteUrl" placeholder="www.company.com">
+                      <div class="invalid-feedback" *ngIf="websiteControl?.hasError('required') && websiteControl?.touched" class="error-msg" style="color: red;">Please enter Company websiteUrl</div>
+                    </div>
+
+                    <!-- Input for Complete Address -->
+                    <div class="form-group col-lg-12 col-md-12">
+                      <label>Complete Address</label>
+                      <input type="text" formControlName="address" placeholder="329 Queensberry Street, North Melbourne VIC 3051, Australia.">
+                      <div class="invalid-feedback" *ngIf="addressControl?.hasError('required') && addressControl?.touched" class="error-msg" style="color: red;">Please enter Company address</div>
+
+                    </div>
+                    
+                    <!-- Input for Email Address -->
+                    <div class="form-group col-lg-12 col-md-12">
+                      <label>Email Address</label>
+                      <input type="text" formControlName="email" placeholder="company@gmail.com">
+                      <div class="invalid-feedback" *ngIf="emailControl?.hasError('required') && emailControl?.touched" class="error-msg" style="color: red;">Please enter Company email</div>
+                      <div class="invalid-feedback" *ngIf="emailControl?.hasError('email') && emailControl?.touched" class="error-msg" style="color: red;">
+                        Please enter a valid email address
+                      </div>
+                    </div>
+
+                  
+                    <!-- Phone Number Input -->
+                      <div class="form-group col-lg-6 col-md-12">
+                        <label>Phone Number</label>
+                        <input type="text"(input)="formatPhoneNumber()" formControlName="phone" placeholder="11 111 111">
+                        
+                        <!-- Messages d'erreur -->
+                        <div class="error-msg" style="color: red;">
+                          <div *ngIf="phoneControl?.hasError('required') && phoneControl?.touched">
+                            Please enter your phone number.
+                          </div>
+                          <div *ngIf="phoneControl?.hasError('minlength')">
+                            Phone number must be at least 8 digits.
+                          </div>
+                          <div *ngIf="phoneControl?.hasError('pattern')">
+                            Please enter a valid phone number (numbers only).
+                          </div>
+                        </div>
+                      </div>
+
+                    <!-- Postcode Input -->
+                    <div class="form-group col-lg-6 col-md-12">
+                      <label>PostCode</label>
+                      <input type="text" formControlName="postCode"name="postCode" placeholder="7000" maxlength="4"(input)="formatPostcodeInput($event)">
+                      <div class="invalid-feedback" *ngIf="postCodeControl?.hasError('required') && postCodeControl?.touched" 
+                      class="error-msg" style="color: red;">
+                   Please enter Company postCode
+                 </div>
+                 <div class="invalid-feedback" *ngIf="postCodeControl?.hasError('pattern') && postCodeControl?.touched" 
+                      class="error-msg" style="color: red;">
+                   PostCode must be 4 digits and numeric
+                 </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-group col-lg-12 col-md-12 text-right">
+                      <button class="theme-btn btn-style-one" type="submit">Update</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Dashboard -->
+
+</div><!-- End Page Wrapper -->

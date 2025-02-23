@@ -83,7 +83,9 @@ export class ListLevelComponent implements OnInit {
       }
     );
   }
-
+  updateLevel(levelId: number) {
+    this.router.navigate(['/home/superAdmin/updateLevel', levelId]);
+  }
   deleteLevel(levelId: number): void {
     if (this.superadminId !== null) { // Check if superadminId is not null
       Swal.fire({

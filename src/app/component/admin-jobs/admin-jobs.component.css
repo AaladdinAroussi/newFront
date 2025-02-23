@@ -1,0 +1,11 @@
+.status-closed {
+    color: red; /* Red for closed status */
+}
+
+.status-pending {
+    color: rgb(238, 238, 47); /* Yellow for pending status */
+}
+
+.status-open {
+    color: green; /* Green for open status */
+}

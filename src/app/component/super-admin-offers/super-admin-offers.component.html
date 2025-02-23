@@ -62,18 +62,33 @@
                           <tr *ngFor="let offer of pendingJobOffers">
                               <td>{{ offer.title }}</td>
                               <td>${{ offer.salary }}</td>
-                              <td class="status text-warning">Pending</td>
+                              <td [ngClass]="{
+                                'status': offer.status === 'OPEN',
+                                'text-warning': offer.status === 'PENDING'
+                              }">
+                            {{ offer.status }}
+                          </td>
                               <td>
                                   <div class="option-box">
                                       <ul class="option-list">
-                                          <li><button data-text="Accepter Application" (click)="approveOffer(offer.id)"><span class="la la-check"></span></button></li>
+                                        <li *ngIf="offer.status !== 'OPEN'">
+                                          <button data-text="Accepter Application" (click)="approveOffer(offer.id)">
+                                            <span class="la la-check"></span>
+                                          </button>                                
+                                        </li>                               
+                                        <!-- Display the SMS button for candidates in the relevant sector (click)="sendSmsToCandidates(offer.id)" -->                                
+                                        <li *ngIf="offer.status === 'OPEN'">
+                                          <button data-text="Envoyer SMS" >           
+                                            <span class="fa fa-sms"></span> <!-- Replace with your desired SMS icon -->                             
+                                          </button>                              
+                                        </li>
                                           <li><button data-text="Delete Application" (click)="rejectOffer(offer.id)"><span class="la la-trash"></span></button></li>
                                       </ul>
                                   </div>
                               </td>
                           </tr>
                           <tr *ngIf="pendingJobOffers.length === 0">
-                              <td colspan="4">No pending job offers available.</td>
+                              <td colspan="4">No active job offers available.</td>
                           </tr>
                       </tbody>
                       </table>
@@ -89,10 +104,6 @@
       </section>
       <!-- End Dashboard -->
   
-      <!-- Copyright -->
-      <div class="copyright-text">
-        <p>© 2021 Superio. All Right Reserved.</p>
-      </div>
-  
+      
     </div><!-- End Page Wrapper -->
   

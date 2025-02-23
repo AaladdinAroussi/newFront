@@ -14,14 +14,15 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token'); 
   }
-  // getUserRole(): string {
-  //   const userData = localStorage.getItem('userconnect');
-  //   if (userData) {
-  //     const parsedData = JSON.parse(userData);
-  //     return parsedData.roles && parsedData.roles.length > 0 ? parsedData.roles[0] : 'guest';
-  //   }
-  //   return 'guest';
-  // }
+  
+  // Method to check if the phone number exists
+  checkPhoneExists(data: { phone: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/checkPhone`, data.phone, { responseType: 'text' });
+  }
+  // Method to check if the email exists
+  checkEmailExists(data: { email: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/checkEmail`, data.email, { responseType: 'text' });
+  }
 
   getUserRoles(): string[] {
     const userData = localStorage.getItem('userconnect');
@@ -75,8 +76,6 @@ export class AuthService {
   
     return this.http.post(`${this.apiUrl}/changePassword`, {}, { params });
   }
-  
-  
 
 
   verifyMobileCode(phone: string, code: string): Observable<any> {

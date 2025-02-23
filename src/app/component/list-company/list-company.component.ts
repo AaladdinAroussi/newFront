@@ -46,36 +46,7 @@ export class ListCompanyComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
-  signOut(): void {
-    const refreshToken = localStorage.getItem('refreshtoken'); // Get refresh token from local storage
-  
-    if (refreshToken) {
-      this.authService.signout(refreshToken).subscribe(
-        (response) => {
-          console.log('Sign out successful:', response);
-  
-          // Remove all relevant items from local storage
-          localStorage.removeItem('userconnect'); // Remove user data
-          localStorage.removeItem('token'); // Remove access token
-          localStorage.removeItem('refreshtoken'); // Remove refresh token
-          localStorage.removeItem('state'); // Remove any other state if necessary
-  
-          this.router.navigate(['/login']); // Redirect to login page
-        },
-        (error) => {
-          console.error('Error during sign out:', error);
-        }
-      );
-    } else {
-      console.log('No refresh token found');
-      // Optionally, you can still clear local storage and redirect
-      localStorage.removeItem('userconnect');
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshtoken');
-      localStorage.removeItem('state');
-      this.router.navigate(['/login']);
-    }
-  }
+ 
   getAdminId(): number | null {
     const userData = localStorage.getItem('userconnect');
     if (userData) {
@@ -144,7 +115,11 @@ export class ListCompanyComponent implements OnInit {
     }
   }
   
-
+  updateCompany(companyId: number) {
+    console.log('Mise à jour de l\'entreprise avec ID:', companyId);
+    // Rediriger vers la page de mise à jour
+    this.router.navigate(['/home/updateCompany', companyId]);
+  }
   viewApplication(companyId: number): void {
     // Navigate to the company detail page with the company ID
     this.router.navigate(['/home/companyDetails', companyId]);

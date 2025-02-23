@@ -50,6 +50,11 @@ import { ChangePasswordComponent } from './component/change-password/change-pass
 import { SuperAdminUsersComponent } from './component/super-admin-users/super-admin-users.component';
 import { VerficationCodeComponent } from './component/verfication-code/verfication-code.component';
 import { CandidateAddDetailsComponent } from './component/candidate-add-details/candidate-add-details.component';
+import { UpdateCompanyComponent } from './component/update-company/update-company.component';
+import { UpdateCategoryComponent } from './component/update-category/update-category.component';
+import { UpdateCityComponent } from './component/update-city/update-city.component';
+import { UpdateLevelComponent } from './component/update-level/update-level.component';
+import { UpdateSectorComponent } from './component/update-sector/update-sector.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +103,11 @@ import { CandidateAddDetailsComponent } from './component/candidate-add-details/
     SuperAdminUsersComponent,
     VerficationCodeComponent,
     CandidateAddDetailsComponent,
+    UpdateCompanyComponent,
+    UpdateCategoryComponent,
+    UpdateCityComponent,
+    UpdateLevelComponent,
+    UpdateSectorComponent,
     
     
   ],

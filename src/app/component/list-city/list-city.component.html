@@ -53,8 +53,13 @@
                                   <td>
                                       <div class="option-box">
                                           <ul class="option-list">
+                                            <li>
+                                              <button (click)="updateCity(city.id)" data-text="Update City">
+                                                <span class="la la-pencil"></span> <!-- Icône de mise à jour -->
+                                              </button>
+                                            </li>
                                               <li>
-                                                  <button (click)="deleteCity(city.id)" data-text="Delete Application">
+                                                  <button (click)="deleteCity(city.id)" data-text="Delete City">
                                                       <span class="la la-trash"></span>
                                                   </button>
                                               </li>
@@ -76,9 +81,6 @@
     </section>
     <!-- End Dashboard -->
 
-    <!-- Copyright -->
-    <div class="copyright-text">
-      <p>© 2021 Superio. All Right Reserved.</p>
-    </div>
+  
 
   </div><!-- End Page Wrapper -->

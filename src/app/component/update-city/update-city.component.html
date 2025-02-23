@@ -1,0 +1,64 @@
+<div class="page-wrapper dashboard ">
+  
+    <!-- Preloader -->
+    <!-- <div class="preloader"></div> -->
+  
+    <!-- Header Span -->
+    <span class="header-span"></span>
+  
+    <!-- Main Header-->
+    <app-header></app-header>
+    <!--End Main Header -->
+  
+    <!-- Sidebar Backdrop -->
+    <div class="sidebar-backdrop"></div>
+  
+    <!-- User Sidebar -->
+    <app-side-bar-super-admin></app-side-bar-super-admin>
+    <!-- End User Sidebar -->
+  
+    <!-- Dashboard -->
+    <section class="user-dashboard">
+      <div class="dashboard-outer">
+        <div class="upper-title-box">
+          <h3>Update City</h3>
+          <div class="text">Ready to make changes?</div>
+        </div>
+  
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- Ls widget -->
+            <div class="ls-widget">
+              <div class="tabs-box">
+                <div class="widget-title">
+                  <h4>Update City</h4>
+                </div>
+  
+                <div class="widget-content">
+                  <form class="default-form" [formGroup]="form" (ngSubmit)="updateCity()">
+                    <div class="row">
+                      <!-- Input for City Name -->
+                      <div class="form-group col-lg-12 col-md-12">
+                        <label>City Name</label>
+                        <input type="text" formControlName="name" placeholder="City">
+                        <div class="invalid-feedback" *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched" class="error-msg" style="color: red;">
+                          Please enter City name
+                        </div>
+                      </div>
+  
+                      <!-- Submit Button -->
+                      <div class="form-group col-lg-12 col-md-12 text-right">
+                        <button class="theme-btn btn-style-one" type="submit">Update</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Dashboard -->
+  
+ 

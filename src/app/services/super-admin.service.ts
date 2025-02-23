@@ -125,4 +125,10 @@ unblockUser (userId: number): Observable<any> {
    updateSuperAdmin(superAdmin: any, id: number): Observable<any> {
       return this.http.put(`${this.baseUrl}update/${id}`, superAdmin, { headers: this.getHeaders() })
     }
+
+    notifyCandidates(jobOfferId: number): Observable<any> {
+      const url = `${this.baseUrl}/notifyCandidates/${jobOfferId}`;
+        return this.http.post(url, null);
+
+    }
 }

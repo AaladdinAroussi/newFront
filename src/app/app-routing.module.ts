@@ -41,6 +41,11 @@ import { ChangePasswordComponent } from './component/change-password/change-pass
 import { SuperAdminUsersComponent } from './component/super-admin-users/super-admin-users.component';
 import { VerficationCodeComponent } from './component/verfication-code/verfication-code.component';
 import { CandidateAddDetailsComponent } from './component/candidate-add-details/candidate-add-details.component';
+import { UpdateCompanyComponent } from './component/update-company/update-company.component';
+import { UpdateCategoryComponent } from './component/update-category/update-category.component';
+import { UpdateLevelComponent } from './component/update-level/update-level.component';
+import { UpdateCityComponent } from './component/update-city/update-city.component';
+import { UpdateSectorComponent } from './component/update-sector/update-sector.component';
 
 const routes: Routes = [
 
@@ -83,13 +88,20 @@ const routes: Routes = [
         data: { expectedRoles: ['ROLE_SUPERADMIN', 'ROLE_ADMIN']}},
       { path: 'adminDashboard', component: AdminDashboardComponent ,canActivate: [AuthGuard, RoleGuard], data: { expectedRoles: ['ROLE_SUPERADMIN', 'ROLE_ADMIN'] } },
       { path: 'postjob', component: PostJobComponent ,canActivate: [AuthGuard, RoleGuard], data: { expectedRoles: ['ROLE_SUPERADMIN', 'ROLE_ADMIN'] }  },
+      { path: 'updateCompany/:id', component: UpdateCompanyComponent ,canActivate: [AuthGuard, RoleGuard], data: { expectedRoles: ['ROLE_SUPERADMIN', 'ROLE_ADMIN'] }  },
+
       { path: 'managejobs', component: AdminJobsComponent ,canActivate: [AuthGuard, RoleGuard], data: { expectedRoles: ['ROLE_ADMIN'] } },
 
-
+        
 
       { path: 'superAdmin/dashboard', component: SuperAdminDashboardComponent,canActivate: [AuthGuard, RoleGuard], data: { expectedRoles: ["ROLE_SUPERADMIN"] }},
       { path: 'superAdmin/addCategory', component: AddCategoryComponent , canActivate: [AuthGuard, RoleGuard], 
         data: { expectedRoles: ["ROLE_SUPERADMIN"]}},
+        { path: 'superAdmin/updateCategory/:id', component: UpdateCategoryComponent ,canActivate: [AuthGuard, RoleGuard], data: { expectedRoles: ['ROLE_SUPERADMIN'] }  },
+        { path: 'superAdmin/updateLevel/:id', component: UpdateLevelComponent ,canActivate: [AuthGuard, RoleGuard], data: { expectedRoles: ['ROLE_SUPERADMIN'] }  },
+        { path: 'superAdmin/updateCity/:id', component: UpdateCityComponent ,canActivate: [AuthGuard, RoleGuard], data: { expectedRoles: ['ROLE_SUPERADMIN'] }  },
+        { path: 'superAdmin/updateSector/:id', component: UpdateSectorComponent ,canActivate: [AuthGuard, RoleGuard], data: { expectedRoles: ['ROLE_SUPERADMIN'] }  },
+
       { path: 'superAdmin/addCity', component: AddCityComponent , canActivate: [AuthGuard, RoleGuard], 
         data: { expectedRoles: ['ROLE_SUPERADMIN']}},
       { path: 'superAdmin/addLevel', component: AddLevelComponent , canActivate: [AuthGuard, RoleGuard], 

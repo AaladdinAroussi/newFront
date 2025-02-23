@@ -47,14 +47,10 @@ export class CommonAdminService {
   }
 
   // Méthode pour mettre à jour une entreprise
-  updateCompany(company: any, id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/updateCompany?id=${id}`, company, { headers: this.getHeaders() }).pipe(
-      catchError(error => {
-        console.error('Update company error', error);
-        return throwError(error);
-      })
-    );
+  updateCompany(id: number, company: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/updateCompany?id=${id}`, company, { headers: this.getHeaders() });
   }
+  
 
   // Méthode pour supprimer une entreprise
   deleteCompany(id: number): Observable<any> {

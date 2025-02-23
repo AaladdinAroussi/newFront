@@ -75,26 +75,37 @@
                             </div>
                           </div>
   
-                        <!-- Phone Number Input -->
+
+<!-- Phone Number Input -->
 <div class="form-group col-lg-6 col-md-12">
   <label>Phone Number</label>
-  <input type="text" name="phone" formControlName="phone" placeholder="22 123 123" 
-         pattern="^[0-9]{8}$" maxlength="8">
-  <div class="invalid-feedback" *ngIf="phoneControl?.hasError('required') && phoneControl?.touched" 
-       class="error-msg" style="color: red;">
-    Please enter Company phone
+  <input type="text" class="form-control" name="phone" formControlName="phone" placeholder="11 111 111"
+        maxlength="11" (input)="formatPhoneInput($event)">
+  
+  <!-- Message d'erreur si le champ est vide -->
+  <div class="invalid-feedback" *ngIf="phoneControl?.hasError('required') && phoneControl?.touched">
+    Please enter your phone number.
   </div>
-  <div class="invalid-feedback" *ngIf="phoneControl?.hasError('pattern') && phoneControl?.touched" 
-       class="error-msg" style="color: red;">
-    Phone number must be 8 digits and numeric
+
+  <!-- Message d'erreur si le numéro est trop court -->
+  <div class="invalid-feedback" *ngIf="phoneControl?.hasError('minlength') && phoneControl?.touched">
+    Phone number must be at least 8 digits.
+  </div>
+
+  <!-- Message d'erreur si le format est incorrect -->
+  <div class="invalid-feedback" *ngIf="phoneControl?.hasError('pattern') && phoneControl?.touched">
+    Please enter a valid phone number (numbers only).
   </div>
 </div>
+
+
+
 
 <!-- Postcode Input -->
 <div class="form-group col-lg-6 col-md-12">
   <label>PostCode</label>
   <input type="text" name="postcode" formControlName="postcode" placeholder="7000" 
-         pattern="^[0-9]{4}$" maxlength="4">
+         pattern="^[0-9]{4}$" maxlength="4" (input)="formatPostcodeInput($event)">
   <div class="invalid-feedback" *ngIf="postCodeControl?.hasError('required') && postCodeControl?.touched" 
        class="error-msg" style="color: red;">
     Please enter Company postCode

@@ -66,12 +66,17 @@
                               <div class="option-box">
                                 <ul class="option-list">
                                   <li>
-                                    <button (click)="viewApplication(company.id)" data-text="View Application">
+                                    <button (click)="viewApplication(company.id)" data-text="View Company">
                                       <span class="la la-eye"></span>
                                     </button>
                                   </li>
                                   <li>
-                                    <button (click)="deleteCompany(company.id)" data-text="Delete Application">
+                                    <button (click)="updateCompany(company.id)" data-text="Update Company">
+                                      <span class="la la-pencil"></span> <!-- Icône de mise à jour -->
+                                    </button>
+                                  </li>
+                                  <li>
+                                    <button (click)="deleteCompany(company.id)" data-text="Delete Company">
                                       <span class="la la-trash"></span>
                                     </button>
                                   </li>
@@ -96,11 +101,7 @@
       </section>
       <!-- End Dashboard -->
   
-      <!-- Copyright -->
-      <div class="copyright-text">
-        <p>© 2021 Superio. All Right Reserved.</p>
-      </div>
-  
+     
     </div><!-- End Page Wrapper -->
   
   

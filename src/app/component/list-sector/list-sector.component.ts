@@ -21,35 +21,8 @@ export class ListSectorComponent implements OnInit {
     this.getAllSectors();
   }
   
-  signOut(): void {
-    const refreshToken = localStorage.getItem('refreshtoken'); // Get refresh token from local storage
-  
-    if (refreshToken) {
-      this.authService.signout(refreshToken).subscribe(
-        (response) => {
-          console.log('Sign out successful:', response);
-  
-          // Remove all relevant items from local storage
-          localStorage.removeItem('userconnect'); // Remove user data
-          localStorage.removeItem('token'); // Remove access token
-          localStorage.removeItem('refreshtoken'); // Remove refresh token
-          localStorage.removeItem('state'); // Remove any other state if necessary
-  
-          this.router.navigate(['/login']); // Redirect to login page
-        },
-        (error) => {
-          console.error('Error during sign out:', error);
-        }
-      );
-    } else {
-      console.log('No refresh token found');
-      // Optionally, you can still clear local storage and redirect
-      localStorage.removeItem('userconnect');
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshtoken');
-      localStorage.removeItem('state');
-      this.router.navigate(['/login']);
-    }
+  updateSector(SectorId: number) {
+    this.router.navigate(['/home/superAdmin/updateSector', SectorId]);
   }
   getAllSectors(): void {
       this.sectorService.getAllSectors().subscribe(

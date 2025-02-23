@@ -105,4 +105,7 @@ export class ListCityComponent implements OnInit {
       }
     });
   }
+  updateCity(CityId: number) {
+    this.router.navigate(['/home/superAdmin/updateCity', CityId]);
+  }
 }

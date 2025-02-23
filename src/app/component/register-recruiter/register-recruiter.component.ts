@@ -56,14 +56,33 @@ selectedCountry: string = ''; // Variable pour stocker le pays sélectionné
       }
     );
     this.form = this.fb.group({
-      fullName: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], // Validation pour chiffres uniquement
+      fullName: ['', [Validators.required, Validators.minLength(3)]], // Minimum length of 3 characters
+      phone: ['', [Validators.required, Validators.pattern('^[0-9 ]*$')]], // Allow digits and spaces
       email: ['', [Validators.required, Validators.email]], // Validation pour email
       password: ['', [Validators.required, Validators.minLength(5)]], // Assurez-vous que c'est un tableau
       country: [this.selectedCountry || '', Validators.required], // Ajout du pays dans le formulaire réactif
     });
   }
-  
+  formatPhoneInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    // Remove all non-numeric characters except spaces
+    const cleanedValue = input.value.replace(/[^0-9]/g, '');
+    // Format the cleaned value to add spaces
+    let formattedValue = '';
+    if (cleanedValue.length > 0) {
+      // Add the first two digits
+      formattedValue += cleanedValue.substring(0, 2);
+    }
+    if (cleanedValue.length > 2) {
+      // Add a space and then the next four digits
+      formattedValue += ' ' + cleanedValue.substring(2, 5);
+    }
+    if (cleanedValue.length > 5) {
+      // Add a space and then the remaining digits
+      formattedValue += ' ' + cleanedValue.substring(5, 8);
+    }
+    input.value = formattedValue.trim(); // Set the formatted value back to the input
+  }
   selectCountry(country: any): void {
       this.selectedCountry = country.code;
       this.selectedCountryName = country.name; // Optional: Keep this if you need it for display purposes
@@ -88,27 +107,37 @@ selectedCountry: string = ''; // Variable pour stocker le pays sélectionné
        }
      }
 
-  signUp(): void {
-    console.log('signUp() called'); 
-    if (this.form.valid) {
-      const formData = this.form.value;
-      const phoneWithoutPlus = this.selectedCountryCode.replace('+', '') + formData.phone;
-      formData.phone = phoneWithoutPlus; // Set the phone number without the '+' sign  
+     signUp(): void {
+      console.log('signUp() called'); 
+      if (this.form.valid) {
+        const formData = this.form.value;
+        // Convert email to lowercase
+        formData.email = formData.email.toLowerCase();
+        const phoneWithoutPlus = this.selectedCountryCode.replace('+', '') + formData.phone.replace(/\s+/g, ''); // Remove spaces
+        formData.phone = phoneWithoutPlus; // Set the phone number without the '+' sign  
         console.log('SignUp Infos:', formData);
-      this.service.signupAdmin(formData).subscribe(
-        (response) => {
-          console.log('SignUp successfully:', response);
-          Swal.fire("SignUp successfully");
-          this.router.navigateByUrl("/login"); 
+        
+        this.service.signupAdmin(formData).subscribe(
+          (response) => {
+            console.log('SignUp successfully:', response);
+            Swal.fire("SignUp successfully");
+            this.router.navigateByUrl("/login"); 
           },
-        (error) => {
-          console.error('Error signUp :', error);
-        }
-      );
-    } else {
-      console.warn("Form invalid", this.form.errors);
-      this.form.markAllAsTouched();
+          (error) => {
+            console.error('Error signUp :', error);
+            // Display the error message using Swal
+            const errorMessage = error.error?.message || 'An error occurred during sign up. Please try again.';
+            Swal.fire({
+              icon: 'error',
+              title: 'Sign Up Failed',
+              text: errorMessage,
+            });
+          }
+        );
+      } else {
+        console.warn("Form invalid", this.form.errors);
+        this.form.markAllAsTouched();
+      }
     }
-  }
   
 }

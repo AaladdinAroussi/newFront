@@ -117,4 +117,7 @@ export class ListCategoryComponent implements OnInit {
       }
     });
   }
+  updateCategory(categoryId: number) {
+    this.router.navigate(['/home/superAdmin/updateCategory', categoryId]);
+  }
 }

@@ -70,7 +70,7 @@ export class SuperAdminOffersComponent implements OnInit {
 
   getPendingJobOffers(): void {
     this.loading = true; // Set loading to true while fetching
-    this.jobService.getPendingJobOffers().subscribe(
+    this.jobService.getActiveJobOffers().subscribe(
         (response: any) => {
             if (response && Array.isArray(response.jobOffers)) {
                 this.pendingJobOffers = response.jobOffers; // Store the retrieved job offers
@@ -86,6 +86,46 @@ export class SuperAdminOffersComponent implements OnInit {
             this.loading = false; // Set loading to false even on error
         }
     );
+}
+
+onNotify(jobOfferId: number) {
+  Swal.showLoading();
+  
+  this.jobService.notifyCandidates(jobOfferId).subscribe({
+    next: (response) => {
+      Swal.close();
+      Swal.fire({
+        icon: 'success',
+        title: 'Notifications envoyées !',
+        html: `
+          <div class="text-start">
+            <p>${response.recipientsCount} candidats ont été notifiés avec succès</p>
+            <small class="text-muted">Référence offre: #${jobOfferId}</small>
+          </div>
+        `,
+        confirmButtonText: 'Fermer',
+        confirmButtonColor: '#28a745',
+        timer: 5000
+      });
+    },
+    error: (err) => {
+      Swal.close();
+      Swal.fire({
+        icon: 'error',
+        title: 'Échec de l\'envoi',
+        html: `
+          <div class="text-start">
+            <p>Erreur lors de la notification des candidats :</p>
+            <p class="text-danger">${err.error?.message || 'Erreur serveur'}</p>
+            <small class="text-muted">Code erreur: ${err.status}</small>
+          </div>
+        `,
+        confirmButtonText: 'Compris',
+        confirmButtonColor: '#dc3545',
+        footer: '<a href="/contact">Besoin d\'aide ? Contactez le support</a>'
+      });
+    }
+  });
 }
 
 
