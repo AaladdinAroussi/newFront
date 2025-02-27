@@ -127,8 +127,7 @@ unblockUser (userId: number): Observable<any> {
     }
 
     notifyCandidates(jobOfferId: number): Observable<any> {
-      const url = `${this.baseUrl}/notifyCandidates/${jobOfferId}`;
-        return this.http.post(url, null);
-
-    }
+      const url = `${this.baseUrl}notifyCandidates/${jobOfferId}`;
+      return this.http.post(url, null, { headers: this.getHeaders() });
+  }
 }

@@ -78,7 +78,7 @@
                                         </li>                               
                                         <!-- Display the SMS button for candidates in the relevant sector (click)="sendSmsToCandidates(offer.id)" -->                                
                                         <li *ngIf="offer.status === 'OPEN'">
-                                          <button data-text="Envoyer SMS" >           
+                                          <button data-text="Envoyer SMS" (click)="onNotify(offer.id)">           
                                             <span class="fa fa-sms"></span> <!-- Replace with your desired SMS icon -->                             
                                           </button>                              
                                         </li>

@@ -93,6 +93,8 @@ onNotify(jobOfferId: number) {
   
   this.jobService.notifyCandidates(jobOfferId).subscribe({
     next: (response) => {
+      console.log("response: " + JSON.stringify(response));
+      
       Swal.close();
       Swal.fire({
         icon: 'success',
@@ -109,6 +111,8 @@ onNotify(jobOfferId: number) {
       });
     },
     error: (err) => {
+      console.log("Error", err);
+      
       Swal.close();
       Swal.fire({
         icon: 'error',

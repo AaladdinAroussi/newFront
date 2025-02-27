@@ -75,3 +75,95 @@
       transform: scale(1);
   }
 }
+.input-group.checkboxes {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between elements */
+}
+
+.input-group.checkboxes input[type="checkbox"] {
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 0;
+  cursor: pointer;
+}
+.input-group.checkboxes .custom-checkbox::before {
+  content: "\2713"; /* Unicode checkmark */
+  font-size: 16px;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none; /* Hide initially */
+}
+
+/* Show checkmark when checked */
+.input-group.checkboxes input[type="checkbox"]:checked + .remember .custom-checkbox::before {
+  display: block;
+}
+
+
+.input-group.checkboxes .remember {
+  position: relative;
+  padding-left: 30px; /* Space for the custom checkbox */
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* Checked state */
+.input-group.checkboxes input[type="checkbox"]:checked + .remember .custom-checkbox {
+  background-color: #007bff; /* Background color when checked */
+  border-color: #007bff; /* Border color when checked */
+  
+}
+
+/* Hover effect */
+.input-group.checkboxes .remember:hover .custom-checkbox {
+  border-color: #0146A6; /* Change border color on hover */
+}
+
+
+.input-group.checkboxes .custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #1967D2; /* Default red border */
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Checked state */
+.input-group.checkboxes input[type="checkbox"]:checked + .remember .custom-checkbox {
+  background-color: #007bff; /* Background color when checked */
+  border-color: #007bff; /* Border color when checked */
+}
+
+.password-wrapper {
+  position: relative; /* Make the wrapper relative for absolute positioning of the icon */
+}
+
+.password-wrapper .form-control {
+  padding-right: 40px; /* Add padding to the right to make space for the icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px; /* Position it 10px from the right */
+  top: 50%; /* Center it vertically */
+  transform: translateY(-50%); /* Adjust for perfect centering */
+  cursor: pointer; /* Change cursor to pointer */
+  color: #007bff; /* Change color to match your theme */
+}

@@ -1,9 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CountryCodeService } from 'src/app/services/country-code-service.service';
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-register',
@@ -17,6 +18,8 @@ export class RegisterComponent implements OnInit {
   selectedCountry: string = ''; // Variable pour stocker le pays sélectionné
   countries: any[] = [];
   form!: FormGroup;
+  passwordVisible: boolean = false;
+  confirmPasswordVisible: boolean = false;
 
   constructor(
     private router: Router,
@@ -39,6 +42,9 @@ export class RegisterComponent implements OnInit {
 
   get passwordControl() {
     return this.form.get('password');
+  }
+  get confirmPasswordControl() {
+    return this.form.get('confirmPassword');
   }
 
   ngOnInit(): void {
@@ -64,12 +70,35 @@ export class RegisterComponent implements OnInit {
     );
 
     this.form = this.fb.group({
-      fullName: ['', [Validators.required, Validators.minLength(3)]], // Minimum length of 3 characters
-      phone: ['', [Validators.required, Validators.pattern('^[0-9 ]*$')]], // Allow digits and spaces
-      email: ['', [Validators.required, Validators.email]], // Validation pour email
-      password: ['', [Validators.required, Validators.minLength(5)]], // Assurez-vous que c'est un tableau
-      country: [this.selectedCountry || '', Validators.required], // Ajout du pays dans le formulaire réactif
-    });
+      fullName: ['', [Validators.required, Validators.minLength(3)]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9 ]*$')]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+      confirmPassword: ['', [Validators.required]],
+      country: [this.selectedCountry || '', Validators.required],
+    },   { validators: this.passwordMatchValidator });
+    
+  
+  
+    console.log('Form initialized:', this.form);
+  }
+  togglePasswordVisibility(fieldId: string): void {
+    const input = document.getElementById(fieldId) as HTMLInputElement;
+    if (!input) return;
+  
+    if (fieldId === 'password-field') {
+      this.passwordVisible = !this.passwordVisible;
+      input.type = this.passwordVisible ? 'text' : 'password';
+    } else if (fieldId === 'confirm-password-field') {
+      this.confirmPasswordVisible = !this.confirmPasswordVisible;
+      input.type = this.confirmPasswordVisible ? 'text' : 'password';
+    }
+  }
+   // Méthode pour valider la correspondance des mots de passe
+   passwordMatchValidator(group: FormGroup): any {
+    return group.get('password')?.value === group.get('confirmPassword')?.value
+      ? null
+      : { mismatch: true };
   }
   formatPhoneInput(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -114,7 +143,16 @@ export class RegisterComponent implements OnInit {
        this.dropdownOpen = false;
      }
    }
+
+  private static passwordMatchValidator(form: FormGroup) {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { mismatch: true };
+  }
+  
    signUp(): void {
+    console.log("Confirm Password Control:", this.confirmPasswordControl);
+
     console.log('signUp() called');
     if (this.form.valid) {
       const formData = this.form.value;
@@ -164,7 +202,7 @@ export class RegisterComponent implements OnInit {
         }
       );
     } else {
-      console.warn("Form invalid", this.form.errors);
+      console.warn("Form invalid:", this.form.errors, this.form);
       this.form.markAllAsTouched();
     }
   }

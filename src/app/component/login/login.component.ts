@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
+  isPasswordVisible = false;
+  isConfirmPasswordVisible: boolean = false;
   
   constructor(
     private fb: FormBuilder,
@@ -28,6 +30,12 @@ export class LoginComponent implements OnInit {
     return this.form.get('password');
   }
 
+  get confirmPasswordControl() {
+
+    return this.form.get('confirmPassword');
+
+  }
+
   ngOnInit(): void {
     this.signOut();
     localStorage.clear();
@@ -35,6 +43,7 @@ export class LoginComponent implements OnInit {
     this.form = this.fb.group({
       login: ['', Validators.required],
       password: ['', Validators.required],
+      
     });
   }
 
@@ -120,7 +129,9 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
+  togglePassword() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
   private redirectToVerification() {
     const loginValue = this.form.value.login;
 

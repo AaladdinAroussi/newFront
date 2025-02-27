@@ -114,14 +114,40 @@
               
               <div class="form-group">
                 <label>Password</label>
-                <input id="password-field" type="password" name="password" value="" placeholder="Password" formControlName="password" class="form-control"
-                [ngClass]="{'is-invalid': passwordControl?.invalid && passwordControl?.touched}">
-                <div class="invalid-feedback" *ngIf="passwordControl?.hasError('required') && passwordControl?.touched" class="error-msg" style="color: red;">Please enter your password.</div>
-                <div *ngIf="passwordControl?.hasError('minlength') && passwordControl?.touched" class="invalid-feedback" style="color: red;">
+                <input id="password-field" [type]="passwordVisible ? 'text' : 'password'"
+                  name="password" placeholder="Password" formControlName="password" class="form-control"
+                  [ngClass]="{'is-invalid': passwordControl?.invalid && passwordControl?.touched}">
+                
+                <i class="fa eye-icon" [ngClass]="passwordVisible ? 'fa-eye-slash' : 'fa-eye'" 
+                  (click)="togglePasswordVisibility('password-field')">
+                </i>
+              
+                <div class="invalid-feedback" *ngIf="passwordControl?.hasError('required') && passwordControl?.touched">
+                  Please enter your password.
+                </div>
+                <div class="invalid-feedback" *ngIf="passwordControl?.hasError('minlength') && passwordControl?.touched">
                   Password must be at least 5 characters long.
                 </div>
               </div>
               
+              <div class="form-group">
+                <label>Confirm Password</label>
+                <input id="confirm-password-field" [type]="confirmPasswordVisible ? 'text' : 'password'"
+                  name="confirmPassword" placeholder="Confirm Password" formControlName="confirmPassword" class="form-control"
+                  [ngClass]="{'is-invalid': confirmPasswordControl?.invalid && confirmPasswordControl?.touched || form.hasError('mismatch')}">
+                
+                <i class="fa  eye-icon" [ngClass]="confirmPasswordVisible ? 'fa-eye-slash' : 'fa-eye'" 
+                  (click)="togglePasswordVisibility('confirm-password-field')">
+                </i>
+              
+                <div class="invalid-feedback" *ngIf="confirmPasswordControl?.hasError('required') && confirmPasswordControl?.touched">
+                  Please confirm your password.
+                </div>
+                <div class="invalid-feedback" *ngIf="form.hasError('mismatch') && confirmPasswordControl?.touched">
+                  Passwords do not match.
+                </div>
+              </div>
+
 
               <div class="form-group">
                 <button class="theme-btn btn-style-one " type="submit" name="Register">Register</button>

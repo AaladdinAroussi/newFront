@@ -17,6 +17,9 @@ selectedCountryCode: string = '';
 dropdownOpen = false;
 selectedCountryName: string = '';
 selectedCountry: string = ''; // Variable pour stocker le pays sélectionné
+passwordVisible: boolean = false;
+confirmPasswordVisible: boolean = false;
+
 
   constructor(private router: Router, private fb: FormBuilder, private service: AuthService,private countryCodeService: CountryCodeService
   ) { }
@@ -33,7 +36,22 @@ selectedCountry: string = ''; // Variable pour stocker le pays sélectionné
   get phoneControl() {
     return this.form.get('phone');
   }
-
+  get confirmPasswordControl() {
+    return this.form.get('confirmPassword');
+  }
+  togglePasswordVisibility(fieldId: string): void {
+    const input = document.getElementById(fieldId) as HTMLInputElement;
+    if (!input) return;
+  
+    if (fieldId === 'password-field') {
+      this.passwordVisible = !this.passwordVisible;
+      input.type = this.passwordVisible ? 'text' : 'password';
+    } else if (fieldId === 'confirm-password-field') {
+      this.confirmPasswordVisible = !this.confirmPasswordVisible;
+      input.type = this.confirmPasswordVisible ? 'text' : 'password';
+    }
+  }
+  
   ngOnInit(): void {
     this.countryCodeService.getAllCountries().subscribe(
       (data) => {
@@ -56,13 +74,22 @@ selectedCountry: string = ''; // Variable pour stocker le pays sélectionné
       }
     );
     this.form = this.fb.group({
-      fullName: ['', [Validators.required, Validators.minLength(3)]], // Minimum length of 3 characters
-      phone: ['', [Validators.required, Validators.pattern('^[0-9 ]*$')]], // Allow digits and spaces
-      email: ['', [Validators.required, Validators.email]], // Validation pour email
-      password: ['', [Validators.required, Validators.minLength(5)]], // Assurez-vous que c'est un tableau
-      country: [this.selectedCountry || '', Validators.required], // Ajout du pays dans le formulaire réactif
-    });
+      fullName: ['', [Validators.required, Validators.minLength(3)]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9 ]*$')]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+      confirmPassword: ['', [Validators.required]],
+      country: [this.selectedCountry || '', Validators.required]
+    }, { validators: this.passwordMatchValidator }); // Assurez-vous d'appeler bind(this)
+    
   }
+  // Méthode pour valider la correspondance des mots de passe
+  passwordMatchValidator(group: FormGroup): any {
+    return group.get('password')?.value === group.get('confirmPassword')?.value
+      ? null
+      : { mismatch: true };
+  }
+  
   formatPhoneInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     // Remove all non-numeric characters except spaces

@@ -45,13 +45,43 @@
     background-color: #E1F2E5; /* Couleur de fond lorsque le bouton est actif */
     color: #4285F4; /* Couleur du texte lorsque le bouton est actif */
   }
-
-
   
 .form-group {
   display: flex;
   flex-direction: column; /* Stack label and input vertically */
+  position: relative;
 }
+/* Positionnement correct des icônes Eye uniquement */
+.eye-icon {
+  position: absolute;
+  right: 15px; /* Adjust the position to the right */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for perfect centering */
+  cursor: pointer;
+  color: #888;
+  font-size: 18px; /* Size of the icon */
+}
+
+.eye-icon:hover {
+  color: #000; /* Changement de couleur au survol */
+}
+
+/* Ajustement du padding des inputs pour éviter que l'icône chevauche le texte */
+.form-group input {
+
+  padding-right: 40px; /* Adjust padding to avoid overlap with the icon */
+
+  min-height: 40px; /* Set a minimum height for the input field */
+
+  box-sizing: border-box; /* Ensure padding is included in the height */
+
+}
+
+/* Assurer que la position relative est appliquée aux .form-group */
+.form-group {
+  position: relative;
+}
+
 
 .d-flex {
   display: flex;
@@ -120,3 +150,4 @@
 .dropdown-list div span {
   flex-grow: 1; /* Allow text to take available space */
 }
+

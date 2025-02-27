@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <div class="page-wrapper">
 
     <!-- Preloader -->
@@ -23,15 +25,33 @@
 
               <div class="form-group">
                 <label>Password</label>
-                <input id="password-field" type="password" name="password" value="" placeholder="Password" formControlName="password" class="form-control">
-                <div class="invalid-feedback" *ngIf="passwordControl?.hasError('required') && passwordControl?.touched" class="error-msg" style="color: red;">Please enter your password.</div>
+                <div class="password-wrapper">
+                  <input 
+                    id="password-field" 
+                    [type]="isPasswordVisible ? 'text' : 'password'" 
+                    name="password" 
+                    placeholder="Password" 
+                    formControlName="password" 
+                    class="form-control">
+                  
+                  <!-- Icône Font Awesome -->
+                  <span class="toggle-password" (click)="togglePassword()">
+                    <i class="fa" [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
+                  </span>
+                </div>
+                
+                <div class="invalid-feedback" *ngIf="passwordControl?.hasError('required') && passwordControl?.touched" style="color: red;">
+                  Please enter your password.
+                </div>
               </div>
 
               <div class="form-group">
                 <div class="field-outer">
                   <div class="input-group checkboxes square">
-                    <input type="checkbox" name="remember-me" value="" id="remember">
-                    <label for="remember" class="remember"><span class="custom-checkbox"></span> Remember me</label>
+                    <input type="checkbox" name="remember-me" id="remember" class="remember-checkbox">
+                    <label for="remember" class="remember">
+                      <span class="custom-checkbox"></span> Remember me
+                    </label>
                   </div>
                   <a href="#" class="pwd">Forgot password?</a>
                 </div>
